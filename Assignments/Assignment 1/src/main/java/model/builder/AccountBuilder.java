@@ -13,6 +13,11 @@ public class AccountBuilder {
         account = new Account();
     }
 
+    public AccountBuilder setId(Long id){
+        account.setId(id);
+        return this;
+    }
+
     public AccountBuilder setClientID(Long clientID){
         account.setClientId(clientID);
         return this;

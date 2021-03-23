@@ -3,6 +3,7 @@ package repository.client;
 import model.ClientInfo;
 import model.User;
 import model.validation.Notification;
+import repository.EntityNotFoundException;
 
 import java.util.List;
 
@@ -13,11 +14,11 @@ public interface ClientRepository {
 
     void removeAll();
 
-    public boolean update(ClientInfo clientInfo);
+    void update(ClientInfo oldClient, ClientInfo newClient);
 
-    public boolean delete(ClientInfo clientInfo);
+    boolean delete(ClientInfo clientInfo);
 
-    public ClientInfo findById(ClientInfo clientInfo);
+    ClientInfo findById(ClientInfo clientInfo) throws EntityNotFoundException;
 
-    public ClientInfo findByPNC(ClientInfo clientInfo);
+    ClientInfo findByPNC(ClientInfo clientInfo) throws EntityNotFoundException;
 }

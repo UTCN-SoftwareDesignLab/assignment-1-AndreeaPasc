@@ -15,7 +15,9 @@ public interface UserRepository {
 
     void removeAll();
 
-    public boolean update(User user);
+    void update(User oldUser, User newUser);
 
-    public boolean delete(User user);
+    boolean delete(User user);
+
+    //User findById(User user);
 }

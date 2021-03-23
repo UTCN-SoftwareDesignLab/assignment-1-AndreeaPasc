@@ -11,6 +11,10 @@ public class ClientInfoBuilder {
         clientInfo = new ClientInfo();
     }
 
+    public  ClientInfoBuilder setId(Long id){
+        clientInfo.setId(id);
+        return this;
+    }
     public ClientInfoBuilder setName(String name){
         clientInfo.setName(name);
         return this;

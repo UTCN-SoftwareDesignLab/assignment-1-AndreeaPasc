@@ -13,38 +13,42 @@ repository/client/ClientRepository.java
  repository.client.ClientRepository
 view/LoginView.java
  view.LoginView
-model/builder/AccountBuilder.java
- model.builder.AccountBuilder
+database/Boostraper.java
+ database.Boostraper
 model/validation/UserValidator.java
  model.validation.UserValidator
 model/builder/ClientInfoBuilder.java
  model.builder.ClientInfoBuilder
-repository/user/UserRepositoryMySQL.java
- repository.user.UserRepositoryMySQL
 model/ClientInfo.java
  model.ClientInfo
+repository/user/UserRepositoryMySQL.java
+ repository.user.UserRepositoryMySQL
 model/validation/ResultFetchException.java
  model.validation.ResultFetchException
-repository/account/AccountRepositoryMySQL.java
- repository.account.AccountRepositoryMySQL
+repository/user/UserRepository.java
+ repository.user.UserRepository
 database/JDBConnectionWrapper.java
  database.JDBConnectionWrapper
 model/User.java
  model.User
-model/Account.java
- model.Account
+model/builder/UserBuilder.java
+ model.builder.UserBuilder
+repository/security/RightsRolesRepository.java
+ repository.security.RightsRolesRepository
 repository/EntityNotFoundException.java
  repository.EntityNotFoundException
+service/client/ClientService.java
+ service.client.ClientService
 model/Right.java
  model.Right
 repository/client/ClientRepositoryMySQL.java
  repository.client.ClientRepositoryMySQL
-repository/security/RightsRolesRepository.java
- repository.security.RightsRolesRepository
+service/client/ClientServiceImpl.java
+ service.client.ClientServiceImpl
 model/validation/Notification.java
  model.validation.Notification
-repository/user/UserRepository.java
- repository.user.UserRepository
+launcher/Launcher.java
+ launcher.Launcher
 database/Constants.java
  database.Constants
  database.Constants$Rights
@@ -55,15 +59,19 @@ service/user/AuthenticationService.java
  service.user.AuthenticationService
 database/SQLTableCreationFactory.java
  database.SQLTableCreationFactory
-database/Boostraper.java
- database.Boostraper
-repository/account/AccountRepository.java
- repository.account.AccountRepository
-model/builder/UserBuilder.java
- model.builder.UserBuilder
-launcher/Launcher.java
- launcher.Launcher
 database/DBConnectionFactory.java
  database.DBConnectionFactory
+repository/account/AccountRepository.java
+ repository.account.AccountRepository
+service/account/AccountService.java
+ service.account.AccountService
+model/Account.java
+ model.Account
+model/builder/AccountBuilder.java
+ model.builder.AccountBuilder
 launcher/ComponentFactory.java
  launcher.ComponentFactory
+repository/account/AccountRepositoryMySQL.java
+ repository.account.AccountRepositoryMySQL
+service/account/AccountServiceImpl.java
+ service.account.AccountServiceImpl

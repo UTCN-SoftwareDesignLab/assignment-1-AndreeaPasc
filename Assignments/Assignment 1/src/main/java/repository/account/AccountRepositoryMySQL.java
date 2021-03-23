@@ -45,11 +45,11 @@ public class AccountRepositoryMySQL implements AccountRepository{
         try {
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("INSERT INTO account values (null, ?, ?, ?, ?, ?)");
-            insertUserStatement.setString(1, account.getClientId().toString());
-            insertUserStatement.setString(2, account.getIdentificationNumber().toString());
+            insertUserStatement.setLong(1, account.getClientId());
+            insertUserStatement.setLong(2, account.getIdentificationNumber());
             insertUserStatement.setString(3, account.getType());
-            insertUserStatement.setString(4, account.getMoneyAmount().toString());
-            insertUserStatement.setString(5, account.getCreationDate().toString());
+            insertUserStatement.setLong(4, account.getMoneyAmount());
+            insertUserStatement.setDate(5, new java.sql.Date(account.getCreationDate().getTime()));
             insertUserStatement.executeUpdate();
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
@@ -117,6 +117,7 @@ public class AccountRepositoryMySQL implements AccountRepository{
             ResultSet accountResultSet = statement.executeQuery(fetchAccountSql);
             while(accountResultSet.next()){
                 newAccount = new AccountBuilder()
+                        .setId(accountResultSet.getLong("id"))
                         .setClientID(accountResultSet.getLong("client_id"))
                         .setIdentificationNumber(accountResultSet.getLong("idNumber"))
                         .setCreationDate(accountResultSet.getDate("creationDate"))

@@ -1,2 +1,10 @@
+repository/RightsRolesRepositoryMySqlTest.java
+ repository.RightsRolesRepositoryMySqlTest
+repository/UserRepositoryMySqlTest.java
+ repository.UserRepositoryMySqlTest
+repository/ClientRepositoryMySqlTest.java
+ repository.ClientRepositoryMySqlTest
 service/user/AuthenticationServiceMySQLTest.java
  service.user.AuthenticationServiceMySQLTest
+repository/AccountRepositoryMySqlTest.java
+ repository.AccountRepositoryMySqlTest

@@ -1,6 +1,7 @@
 package service.client;
 
 import model.ClientInfo;
+import repository.EntityNotFoundException;
 import repository.client.ClientRepository;
 
 import java.util.List;
@@ -30,8 +31,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean update(ClientInfo clientInfo) {
-        return clientRepository.update(clientInfo);
+    public void update(ClientInfo oldClient, ClientInfo newClient) {
+        clientRepository.update(oldClient, newClient);
     }
 
     @Override
@@ -40,12 +41,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientInfo findById(ClientInfo clientInfo) {
+    public ClientInfo findById(ClientInfo clientInfo) throws EntityNotFoundException {
         return clientRepository.findById(clientInfo);
     }
 
     @Override
-    public ClientInfo findByPNC(ClientInfo clientInfo) {
+    public ClientInfo findByPNC(ClientInfo clientInfo) throws EntityNotFoundException {
         return clientRepository.findByPNC(clientInfo);
     }
 }

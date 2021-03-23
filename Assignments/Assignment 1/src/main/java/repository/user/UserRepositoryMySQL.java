@@ -1,14 +1,18 @@
 package repository.user;
 
+import model.ClientInfo;
 import model.User;
+import model.builder.ClientInfoBuilder;
 import model.builder.UserBuilder;
 import model.validation.Notification;
+import repository.EntityNotFoundException;
 import repository.security.RightsRolesRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static database.Constants.Tables.CLIENT;
 import static database.Constants.Tables.USER;
 
 public class UserRepositoryMySQL implements UserRepository {
@@ -105,18 +109,17 @@ public class UserRepositoryMySQL implements UserRepository {
         }
     }
 
-    public boolean update(User user){
+    public void update(User oldUser, User newUser) {
+        this.delete(oldUser);
+
         try {
             PreparedStatement insertUserStatement = connection
-                    .prepareStatement("UPDATE user SET  " + "username = ?, password = ?, role = ?" + "WHERE  id = ?");
-            insertUserStatement.setString(1, user.getUsername());
-            insertUserStatement.setString(2, user.getPassword());
-            insertUserStatement.setString(3, user.getRoles().toString());
+                    .prepareStatement("INSERT INTO " + USER + " values (" + oldUser.getId() +", ?, ?)");
+            insertUserStatement.setString(1, newUser.getUsername());
+            insertUserStatement.setString(2, newUser.getPassword());
             insertUserStatement.executeUpdate();
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -132,4 +135,5 @@ public class UserRepositoryMySQL implements UserRepository {
             return false;
         }
     }
+
 }

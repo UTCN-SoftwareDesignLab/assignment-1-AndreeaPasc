@@ -11,9 +11,9 @@ public interface AccountRepository {
 
     void removeAll();
 
-    public boolean update(Account account);
+    boolean update(Account account);
 
-    public boolean delete(Account account);
+    boolean delete(Account account);
 
-    public Account findById(Account account);
+    Account findById(Account account);
 }
