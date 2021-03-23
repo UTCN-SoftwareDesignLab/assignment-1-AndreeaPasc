@@ -1,0 +1,69 @@
+model/Role.java
+ model.Role
+service/user/AuthenticationServiceMySQL.java
+ service.user.AuthenticationServiceMySQL
+controller/LoginController.java
+ controller.LoginController
+ controller.LoginController$1
+ controller.LoginController$LoginButtonListener
+ controller.LoginController$RegisterButtonListener
+repository/security/RightsRolesRepositoryMySQL.java
+ repository.security.RightsRolesRepositoryMySQL
+repository/client/ClientRepository.java
+ repository.client.ClientRepository
+view/LoginView.java
+ view.LoginView
+model/builder/AccountBuilder.java
+ model.builder.AccountBuilder
+model/validation/UserValidator.java
+ model.validation.UserValidator
+model/builder/ClientInfoBuilder.java
+ model.builder.ClientInfoBuilder
+repository/user/UserRepositoryMySQL.java
+ repository.user.UserRepositoryMySQL
+model/ClientInfo.java
+ model.ClientInfo
+model/validation/ResultFetchException.java
+ model.validation.ResultFetchException
+repository/account/AccountRepositoryMySQL.java
+ repository.account.AccountRepositoryMySQL
+database/JDBConnectionWrapper.java
+ database.JDBConnectionWrapper
+model/User.java
+ model.User
+model/Account.java
+ model.Account
+repository/EntityNotFoundException.java
+ repository.EntityNotFoundException
+model/Right.java
+ model.Right
+repository/client/ClientRepositoryMySQL.java
+ repository.client.ClientRepositoryMySQL
+repository/security/RightsRolesRepository.java
+ repository.security.RightsRolesRepository
+model/validation/Notification.java
+ model.validation.Notification
+repository/user/UserRepository.java
+ repository.user.UserRepository
+database/Constants.java
+ database.Constants
+ database.Constants$Rights
+ database.Constants$Roles
+ database.Constants$Schemas
+ database.Constants$Tables
+service/user/AuthenticationService.java
+ service.user.AuthenticationService
+database/SQLTableCreationFactory.java
+ database.SQLTableCreationFactory
+database/Boostraper.java
+ database.Boostraper
+repository/account/AccountRepository.java
+ repository.account.AccountRepository
+model/builder/UserBuilder.java
+ model.builder.UserBuilder
+launcher/Launcher.java
+ launcher.Launcher
+database/DBConnectionFactory.java
+ database.DBConnectionFactory
+launcher/ComponentFactory.java
+ launcher.ComponentFactory
