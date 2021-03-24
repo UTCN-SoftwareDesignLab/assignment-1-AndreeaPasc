@@ -1,6 +1,7 @@
 package repository.account;
 
 import model.Account;
+import repository.EntityNotFoundException;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface AccountRepository {
 
     boolean delete(Account account);
 
-    Account findById(Account account);
+    Account findById(Account account) throws EntityNotFoundException;
 }

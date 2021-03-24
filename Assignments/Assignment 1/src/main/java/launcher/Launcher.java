@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Launcher {
 
-    public static boolean BOOTSTRAP = false;
+    public static boolean BOOTSTRAP = true;
 
     public static void main(String[] args) {
         bootstrap();

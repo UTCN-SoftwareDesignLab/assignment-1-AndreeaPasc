@@ -13,8 +13,8 @@ repository/client/ClientRepository.java
  repository.client.ClientRepository
 view/LoginView.java
  view.LoginView
-database/Boostraper.java
- database.Boostraper
+launcher/ComponentFactory.java
+ launcher.ComponentFactory
 model/validation/UserValidator.java
  model.validation.UserValidator
 model/builder/ClientInfoBuilder.java
@@ -25,16 +25,16 @@ repository/user/UserRepositoryMySQL.java
  repository.user.UserRepositoryMySQL
 model/validation/ResultFetchException.java
  model.validation.ResultFetchException
-repository/user/UserRepository.java
- repository.user.UserRepository
+service/client/ClientServiceImpl.java
+ service.client.ClientServiceImpl
 database/JDBConnectionWrapper.java
  database.JDBConnectionWrapper
 model/User.java
  model.User
 model/builder/UserBuilder.java
  model.builder.UserBuilder
-repository/security/RightsRolesRepository.java
- repository.security.RightsRolesRepository
+service/account/AccountServiceImpl.java
+ service.account.AccountServiceImpl
 repository/EntityNotFoundException.java
  repository.EntityNotFoundException
 service/client/ClientService.java
@@ -43,12 +43,12 @@ model/Right.java
  model.Right
 repository/client/ClientRepositoryMySQL.java
  repository.client.ClientRepositoryMySQL
-service/client/ClientServiceImpl.java
- service.client.ClientServiceImpl
+repository/security/RightsRolesRepository.java
+ repository.security.RightsRolesRepository
 model/validation/Notification.java
  model.validation.Notification
-launcher/Launcher.java
- launcher.Launcher
+database/SQLTableCreationFactory.java
+ database.SQLTableCreationFactory
 database/Constants.java
  database.Constants
  database.Constants$Rights
@@ -57,8 +57,8 @@ database/Constants.java
  database.Constants$Tables
 service/user/AuthenticationService.java
  service.user.AuthenticationService
-database/SQLTableCreationFactory.java
- database.SQLTableCreationFactory
+repository/user/UserRepository.java
+ repository.user.UserRepository
 database/DBConnectionFactory.java
  database.DBConnectionFactory
 repository/account/AccountRepository.java
@@ -67,11 +67,11 @@ service/account/AccountService.java
  service.account.AccountService
 model/Account.java
  model.Account
-model/builder/AccountBuilder.java
- model.builder.AccountBuilder
-launcher/ComponentFactory.java
- launcher.ComponentFactory
 repository/account/AccountRepositoryMySQL.java
  repository.account.AccountRepositoryMySQL
-service/account/AccountServiceImpl.java
- service.account.AccountServiceImpl
+model/builder/AccountBuilder.java
+ model.builder.AccountBuilder
+database/Boostraper.java
+ database.Boostraper
+launcher/Launcher.java
+ launcher.Launcher

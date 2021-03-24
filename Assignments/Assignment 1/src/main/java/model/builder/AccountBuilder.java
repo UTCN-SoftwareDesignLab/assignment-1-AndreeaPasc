@@ -45,5 +45,4 @@ public class AccountBuilder {
     public Account build() {
         return account;
     }
-
 }

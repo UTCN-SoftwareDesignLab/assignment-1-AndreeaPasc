@@ -1,6 +1,7 @@
 package service.account;
 
 import model.Account;
+import repository.EntityNotFoundException;
 import repository.account.AccountRepository;
 import repository.client.ClientRepository;
 
@@ -39,7 +40,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Account findById(Account account) {
+    public Account findById(Account account) throws EntityNotFoundException {
         return accountRepository.findById(account);
     }
 

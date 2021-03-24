@@ -1,7 +1,9 @@
 package repository.account;
 
 import model.Account;
+import model.ClientInfo;
 import model.builder.AccountBuilder;
+import repository.EntityNotFoundException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class AccountRepositoryMySQL implements AccountRepository{
     public boolean save(Account account) {
         try {
             PreparedStatement insertUserStatement = connection
-                    .prepareStatement("INSERT INTO account values (null, ?, ?, ?, ?, ?)");
+                    .prepareStatement("INSERT INTO account values (null, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             insertUserStatement.setLong(1, account.getClientId());
             insertUserStatement.setLong(2, account.getIdentificationNumber());
             insertUserStatement.setString(3, account.getType());
@@ -109,14 +111,13 @@ public class AccountRepositoryMySQL implements AccountRepository{
     }
 
     @Override
-    public Account findById(Account account) {
-        Account newAccount = null;
-        try{
+    public Account findById(Account account) throws EntityNotFoundException {
+        try {
             Statement statement = connection.createStatement();
             String fetchAccountSql = "Select * from account WHERE id = " + account.getId();
             ResultSet accountResultSet = statement.executeQuery(fetchAccountSql);
-            while(accountResultSet.next()){
-                newAccount = new AccountBuilder()
+            if (accountResultSet.next()) {
+                return new AccountBuilder()
                         .setId(accountResultSet.getLong("id"))
                         .setClientID(accountResultSet.getLong("client_id"))
                         .setIdentificationNumber(accountResultSet.getLong("idNumber"))
@@ -124,10 +125,12 @@ public class AccountRepositoryMySQL implements AccountRepository{
                         .setMoneyAmount(accountResultSet.getLong("moneyAmount"))
                         .setType(accountResultSet.getString("type"))
                         .build();
+            } else {
+                throw new EntityNotFoundException(account.getId(), Account.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
+            throw new EntityNotFoundException(account.getId(), Account.class.getSimpleName());
         }
-        return newAccount;
     }
 }

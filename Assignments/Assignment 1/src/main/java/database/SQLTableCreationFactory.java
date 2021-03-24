@@ -24,14 +24,14 @@ public class SQLTableCreationFactory {
 
             case ACCOUNT:
                 return "CREATE TABLE IF NOT EXISTS account (" +
-                        "  id INT NOT NULL AUTO_INCREMENT," +
-                        "  client_id INT NOT NULL, " +
+                        "  id int(11) NOT NULL AUTO_INCREMENT," +
+                        "  client_id int(11) NOT NULL, " +
                         "  idNumber int(11) NOT NULL," +
                         "  type VARCHAR(200) NOT NULL," +
                         "  moneyAmount int(11) NOT NULL," +
                         "  creationDate datetime DEFAULT NULL," +
                         "  PRIMARY KEY (id)," +
-                        "  UNIQUE INDEX id_UNIQUE (id ASC)," +
+                        "  UNIQUE INDEX id_UNIQUE (id)," +
                         "  UNIQUE INDEX idNumber_UNIQUE (idNumber ASC)," +
                         "  INDEX client_id_idx (client_id ASC)," +
                         "  CONSTRAINT client_id" +

@@ -12,7 +12,13 @@ public class Account {
     private Long moneyAmount;
     private Date creationDate;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public Long getId() {
+        return id;
+    }
 
     public Long getIdentificationNumber() {
         return identificationNumber;
@@ -54,11 +60,4 @@ public class Account {
         this.creationDate = creationDate;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

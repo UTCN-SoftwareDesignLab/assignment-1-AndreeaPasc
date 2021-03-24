@@ -41,6 +41,8 @@ public class Boostraper {
                     "TRUNCATE `user_role`;",
                     "DROP TABLE `user_role`;",
                     "TRUNCATE `role`;",
+                    "TRUNCATE `account`;",
+                    //"DROP TABLE `account`",
                     "DROP TABLE `account`, `client_info`, `role`, `user`;"
             };
 

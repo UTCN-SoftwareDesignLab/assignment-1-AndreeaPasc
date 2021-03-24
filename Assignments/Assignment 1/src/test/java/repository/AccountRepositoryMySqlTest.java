@@ -1,5 +1,6 @@
 package repository;
 
+import com.sun.source.tree.AssertTree;
 import launcher.ComponentFactory;
 import model.Account;
 import model.ClientInfo;
@@ -91,7 +92,7 @@ public class AccountRepositoryMySqlTest {
     }
 
     @Test
-    public void findById() {
+    public void findById() throws EntityNotFoundException {
         ClientInfo client = new ClientInfoBuilder()
                 .setAddress("Str. M. Eminescu, 20")
                 .setIdentificationNumber(4569L)
@@ -110,17 +111,28 @@ public class AccountRepositoryMySqlTest {
                 .setMoneyAmount(50L)
                 .setType("Savings")
                 .build();
+
+        Account account2 = new AccountBuilder()
+                .setClientID(clients.get(0).getId())
+                .setCreationDate(new Date())
+                .setIdentificationNumber(1234L)
+                .setMoneyAmount(500L)
+                .setType("Debit")
+                .build();
         accountRepository.save(account);
+        accountRepository.save(account2);
 
         Account found = null;
 
         List<Account> accounts = accountRepository.findAll();
         Account account0 = accounts.get(0);
+        Assert.assertNotNull(account0.getId());
+        /*
         for (Account acc : accounts) {
-            if (acc.getId().equals(accountRepository.findById(account0).getId())) {
-                found = acc;
-            }
+            Assert.assertNull(acc.getId());
         }
         Assert.assertNotNull(found);
+        */
+
     }
 }
