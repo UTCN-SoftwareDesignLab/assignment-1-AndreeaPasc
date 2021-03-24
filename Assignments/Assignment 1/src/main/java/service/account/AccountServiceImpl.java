@@ -30,8 +30,8 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public boolean update(Account account) {
-        return accountRepository.update(account);
+    public void update(Account oldAccount, Account newAccount) {
+        accountRepository.update(oldAccount, newAccount);
     }
 
     @Override

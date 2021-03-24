@@ -1,6 +1,5 @@
 package repository;
 
-import com.sun.source.tree.AssertTree;
 import launcher.ComponentFactory;
 import model.Account;
 import model.ClientInfo;
@@ -126,13 +125,103 @@ public class AccountRepositoryMySqlTest {
 
         List<Account> accounts = accountRepository.findAll();
         Account account0 = accounts.get(0);
-        Assert.assertNotNull(account0.getId());
-        /*
+
         for (Account acc : accounts) {
-            Assert.assertNull(acc.getId());
+            if(acc.getId().equals(accountRepository.findById(account0).getId()))
+                found = acc;
         }
         Assert.assertNotNull(found);
-        */
+    }
 
+    @Test
+    public void delete(){
+        ClientInfo client = new ClientInfoBuilder()
+                .setAddress("Str. M. Eminescu, 20")
+                .setPersonalNumericalCode(123654L)
+                .setIdentificationNumber(1285L)
+                .setPhoneNumber(4569789L)
+                .setName("Marian")
+                .build();
+        clientRepository.save(client);
+        List<ClientInfo> clients = clientRepository.findAll();
+
+        Account account = new AccountBuilder()
+                .setClientID(clients.get(0).getId())
+                .setCreationDate(new Date())
+                .setIdentificationNumber(123L)
+                .setMoneyAmount(50L)
+                .setType("Savings")
+                .build();
+        accountRepository.save(account);
+        accountRepository.delete(account);
+        List<Account> accounts = accountRepository.findAll();
+        Assert.assertTrue(accounts.isEmpty());
+    }
+
+    @Test
+    public void update(){
+        ClientInfo client = new ClientInfoBuilder()
+                .setAddress("Str. M. Eminescu, 20")
+                .setPersonalNumericalCode(123654L)
+                .setIdentificationNumber(1285L)
+                .setPhoneNumber(4569789L)
+                .setName("Marian")
+                .build();
+        clientRepository.save(client);
+        List<ClientInfo> clients = clientRepository.findAll();
+
+        Account account = new AccountBuilder()
+                .setClientID(clients.get(0).getId())
+                .setCreationDate(new Date())
+                .setIdentificationNumber(123L)
+                .setMoneyAmount(50L)
+                .setType("Savings")
+                .build();
+
+        Account account2 = new AccountBuilder()
+                .setClientID(clients.get(0).getId())
+                .setCreationDate(new Date())
+                .setIdentificationNumber(123L)
+                .setMoneyAmount(50L)
+                .setType("Debit")
+                .build();
+        accountRepository.save(account);
+        accountRepository.update(accountRepository.findAll().get(0), account2);
+        assertEquals(accountRepository.findAll().get(0).getType(), account2.getType());
+    }
+
+    @Test
+    public void removeAll(){
+        ClientInfo client = new ClientInfoBuilder()
+                .setAddress("Str. M. Eminescu, 20")
+                .setIdentificationNumber(4569L)
+                .setName("Mihai Narius")
+                .setPersonalNumericalCode(78965L)
+                .setPhoneNumber(4567812L)
+                .build();
+
+        clientRepository.save(client);
+        List<ClientInfo> clients = clientRepository.findAll();
+
+        Account account = new AccountBuilder()
+                .setClientID(clients.get(0).getId())
+                .setCreationDate(new Date())
+                .setIdentificationNumber(123L)
+                .setMoneyAmount(50L)
+                .setType("Savings")
+                .build();
+
+        Account account2 = new AccountBuilder()
+                .setClientID(clients.get(0).getId())
+                .setCreationDate(new Date())
+                .setIdentificationNumber(1234L)
+                .setMoneyAmount(500L)
+                .setType("Debit")
+                .build();
+        accountRepository.save(account);
+        accountRepository.save(account2);
+        accountRepository.removeAll();
+        List<Account> accounts = accountRepository.findAll();
+        Assert.assertTrue(accounts.isEmpty());
     }
 }

@@ -13,7 +13,7 @@ public interface AccountService {
 
     void removeAll();
 
-    boolean update(Account account);
+    void update(Account oldAccount, Account newAccount);
 
     boolean delete(Account account);
 

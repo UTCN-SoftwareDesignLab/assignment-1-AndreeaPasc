@@ -12,7 +12,7 @@ public interface AccountRepository {
 
     void removeAll();
 
-    boolean update(Account account);
+    void update(Account oldAccount, Account newAccount);
 
     boolean delete(Account account);
 

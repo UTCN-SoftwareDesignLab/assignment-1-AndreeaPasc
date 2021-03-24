@@ -13,8 +13,8 @@ repository/client/ClientRepository.java
  repository.client.ClientRepository
 view/LoginView.java
  view.LoginView
-launcher/ComponentFactory.java
- launcher.ComponentFactory
+model/builder/AccountBuilder.java
+ model.builder.AccountBuilder
 model/validation/UserValidator.java
  model.validation.UserValidator
 model/builder/ClientInfoBuilder.java
@@ -33,8 +33,8 @@ model/User.java
  model.User
 model/builder/UserBuilder.java
  model.builder.UserBuilder
-service/account/AccountServiceImpl.java
- service.account.AccountServiceImpl
+model/Account.java
+ model.Account
 repository/EntityNotFoundException.java
  repository.EntityNotFoundException
 service/client/ClientService.java
@@ -47,8 +47,8 @@ repository/security/RightsRolesRepository.java
  repository.security.RightsRolesRepository
 model/validation/Notification.java
  model.validation.Notification
-database/SQLTableCreationFactory.java
- database.SQLTableCreationFactory
+launcher/Launcher.java
+ launcher.Launcher
 database/Constants.java
  database.Constants
  database.Constants$Rights
@@ -61,17 +61,17 @@ repository/user/UserRepository.java
  repository.user.UserRepository
 database/DBConnectionFactory.java
  database.DBConnectionFactory
+database/Boostraper.java
+ database.Boostraper
+database/SQLTableCreationFactory.java
+ database.SQLTableCreationFactory
 repository/account/AccountRepository.java
  repository.account.AccountRepository
 service/account/AccountService.java
  service.account.AccountService
-model/Account.java
- model.Account
+launcher/ComponentFactory.java
+ launcher.ComponentFactory
 repository/account/AccountRepositoryMySQL.java
  repository.account.AccountRepositoryMySQL
-model/builder/AccountBuilder.java
- model.builder.AccountBuilder
-database/Boostraper.java
- database.Boostraper
-launcher/Launcher.java
- launcher.Launcher
+service/account/AccountServiceImpl.java
+ service.account.AccountServiceImpl

@@ -9,6 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static database.Constants.Tables.ACCOUNT;
+import static database.Constants.Tables.CLIENT;
+
 public class AccountRepositoryMySQL implements AccountRepository{
 
     private final Connection connection;
@@ -27,6 +30,7 @@ public class AccountRepositoryMySQL implements AccountRepository{
             ResultSet accountResultSet = statement.executeQuery(fetchAccountSql);
             while(accountResultSet.next()){
                 Account account = new AccountBuilder()
+                        .setId(accountResultSet.getLong("id"))
                         .setClientID(accountResultSet.getLong("client_id"))
                         .setIdentificationNumber(accountResultSet.getLong("idNumber"))
                         .setCreationDate(accountResultSet.getDate("creationDate"))
@@ -78,21 +82,20 @@ public class AccountRepositoryMySQL implements AccountRepository{
     }
 
     @Override
-    public boolean update(Account account) {
+    public void update(Account oldAccount, Account newAccount) {
+        this.delete(oldAccount);
         try {
-            PreparedStatement insertUserStatement = connection
-                    .prepareStatement("UPDATE account SET  " + "client_info = ?, idNumber = ?, type = ?, moneyAmount = ?, creationDate = ?" + "WHERE  id = ?");
-            insertUserStatement.setString(1, account.getClientId().toString());
-            insertUserStatement.setString(2, account.getIdentificationNumber().toString());
-            insertUserStatement.setString(3, account.getType());
-            insertUserStatement.setString(4, account.getMoneyAmount().toString());
-            insertUserStatement.setString(5, account.getCreationDate().toString());
-            insertUserStatement.executeUpdate();
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("INSERT INTO " + ACCOUNT + " values (" + oldAccount.getId() +", ?, ?, ?, ?, ?)");
 
-            return true;
+            preparedStatement.setLong(4, newAccount.getMoneyAmount());
+            preparedStatement.setLong(1, newAccount.getClientId());
+            preparedStatement.setLong(2, newAccount.getIdentificationNumber());
+            preparedStatement.setString(3, newAccount.getType());
+            preparedStatement.setDate(5, new java.sql.Date(newAccount.getCreationDate().getTime()));
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
