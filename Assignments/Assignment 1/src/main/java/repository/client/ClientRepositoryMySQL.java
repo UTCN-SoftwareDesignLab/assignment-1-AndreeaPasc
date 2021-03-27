@@ -1,7 +1,7 @@
 package repository.client;
 
-import model.ClientInfo;
-import model.builder.ClientInfoBuilder;
+import model.Client;
+import model.builder.ClientBuilder;
 import repository.EntityNotFoundException;
 
 import java.sql.*;
@@ -19,14 +19,14 @@ public class ClientRepositoryMySQL implements ClientRepository{
     }
 
     @Override
-    public List<ClientInfo> findAll() {
-        List<ClientInfo> clientsInfo = new ArrayList<ClientInfo>();
+    public List<Client> findAll() {
+        List<Client> clientsInfo = new ArrayList<Client>();
         try{
             Statement statement = connection.createStatement();
             String fetchClientSql = "Select * from client_info";
             ResultSet clientResultSet = statement.executeQuery(fetchClientSql);
             while(clientResultSet.next()){
-                ClientInfo clientInfo = new ClientInfoBuilder()
+                Client client = new ClientBuilder()
                         .setId(clientResultSet.getLong("id"))
                         .setName(clientResultSet.getString("name"))
                         .setAddress(clientResultSet.getString("address"))
@@ -35,7 +35,7 @@ public class ClientRepositoryMySQL implements ClientRepository{
                         .setPersonalNumericalCode(clientResultSet.getLong("PNC"))
                         .build();
 
-                clientsInfo.add(clientInfo);
+                clientsInfo.add(client);
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -44,21 +44,21 @@ public class ClientRepositoryMySQL implements ClientRepository{
     }
 
     @Override
-    public boolean save(ClientInfo clientInfo) {
+    public boolean save(Client client) {
         try {
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("INSERT INTO client_info values (null, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            insertUserStatement.setString(1, clientInfo.getIdentificationNumber().toString());
-            insertUserStatement.setString(2, clientInfo.getPersonalNumericalCode().toString());
-            insertUserStatement.setString(3, clientInfo.getAddress());
-            insertUserStatement.setString(4, clientInfo.getName());
-            insertUserStatement.setString(5, clientInfo.getPhoneNumber().toString());
+            insertUserStatement.setString(1, client.getIdentificationNumber().toString());
+            insertUserStatement.setString(2, client.getPersonalNumericalCode().toString());
+            insertUserStatement.setString(3, client.getAddress());
+            insertUserStatement.setString(4, client.getName());
+            insertUserStatement.setString(5, client.getPhoneNumber().toString());
             insertUserStatement.executeUpdate();
 
             ResultSet rs = insertUserStatement.getGeneratedKeys();
             rs.next();
             long userId = rs.getLong(1);
-            clientInfo.setId(userId);
+            client.setId(userId);
 
             return true;
         } catch (SQLException e) {
@@ -79,12 +79,10 @@ public class ClientRepositoryMySQL implements ClientRepository{
     }
 
     @Override
-    public void update(ClientInfo oldClient, ClientInfo newClient) {
-        this.delete(oldClient);
-
+    public void update(Client oldClient, Client newClient) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO " + CLIENT + " values (" + oldClient.getId() +", ?, ?, ?, ?, ?)");
+                    .prepareStatement("UPDATE " + CLIENT + " SET idCardNumber = ?, PNC = ?, address = ?, name = ?, phoneNumber = ? WHERE id = " + oldClient.getId());
 
             preparedStatement.setString(4, newClient.getName());
             preparedStatement.setLong(1, newClient.getIdentificationNumber());
@@ -98,11 +96,11 @@ public class ClientRepositoryMySQL implements ClientRepository{
     }
 
     @Override
-    public boolean delete(ClientInfo clientInfo) {
+    public boolean delete(Client client) {
         try{
             PreparedStatement insertUserStatement = connection
                     .prepareStatement("DELETE FROM client_info WHERE  " + "id = ?");
-            insertUserStatement.setString(1, clientInfo.getId().toString());
+            insertUserStatement.setString(1, client.getId().toString());
             insertUserStatement.executeUpdate();
             return true;
         }catch (SQLException e){
@@ -112,13 +110,13 @@ public class ClientRepositoryMySQL implements ClientRepository{
     }
 
     @Override
-    public ClientInfo findById(ClientInfo clientInfo) throws EntityNotFoundException {
+    public Client findById(Client client) throws EntityNotFoundException {
         try{
             Statement statement = connection.createStatement();
-            String fetchClientSql = "SELECT * FROM client_info WHERE id = " + clientInfo.getId();
+            String fetchClientSql = "SELECT * FROM client_info WHERE id = " + client.getId();
             ResultSet clientResultSet = statement.executeQuery(fetchClientSql);
             if(clientResultSet.next()){
-                return new ClientInfoBuilder()
+                return new ClientBuilder()
                         .setId(clientResultSet.getLong("id"))
                         .setName(clientResultSet.getString("name"))
                         .setAddress(clientResultSet.getString("address"))
@@ -127,21 +125,21 @@ public class ClientRepositoryMySQL implements ClientRepository{
                         .setPersonalNumericalCode(clientResultSet.getLong("PNC"))
                         .build();
             }else {
-                throw new EntityNotFoundException(clientInfo.getId(), ClientInfo.class.getSimpleName());
+                throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
-            throw new EntityNotFoundException(clientInfo.getId(), ClientInfo.class.getSimpleName());
+            throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
         }
     }
 
-    public ClientInfo findByPNC(ClientInfo clientInfo) throws EntityNotFoundException{
+    public Client findByPNC(Client client) throws EntityNotFoundException{
         try{
             Statement statement = connection.createStatement();
-            String fetchClientSql = "Select * from client_info WHERE PNC = " + clientInfo.getPersonalNumericalCode();
+            String fetchClientSql = "Select * from client_info WHERE PNC = " + client.getPersonalNumericalCode();
             ResultSet clientResultSet = statement.executeQuery(fetchClientSql);
             if(clientResultSet.next()){
-                return new ClientInfoBuilder()
+                return new ClientBuilder()
                         .setId(clientResultSet.getLong("id"))
                         .setName(clientResultSet.getString("name"))
                         .setAddress(clientResultSet.getString("address"))
@@ -150,11 +148,11 @@ public class ClientRepositoryMySQL implements ClientRepository{
                         .setPersonalNumericalCode(clientResultSet.getLong("PNC"))
                         .build();
             }else {
-            throw new EntityNotFoundException(clientInfo.getId(), ClientInfo.class.getSimpleName());
+            throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
-            throw new EntityNotFoundException(clientInfo.getId(), ClientInfo.class.getSimpleName());
+            throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
         }
     }
 }

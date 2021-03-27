@@ -1,24 +1,24 @@
 package service.account;
 
 import model.Account;
+import model.Client;
+import model.validation.Notification;
 import repository.EntityNotFoundException;
-
-import java.util.List;
 
 public interface AccountService {
 
-    List<Account> findAll();
+    Notification<Account> findAll();
 
-    boolean save(Account account);
+    Notification<Client> save(Account account);
 
-    void removeAll();
+    Notification<Account> removeAll();
 
     void update(Account oldAccount, Account newAccount);
 
-    boolean delete(Account account);
+    Notification<Account> delete(Account account);
 
-    Account findById(Account account) throws EntityNotFoundException;
+    Notification<Account> findById(Account account) throws EntityNotFoundException;
 
-    void transferMoney(Long money, Account account1, Account account2);
+    Notification<Account> transferMoney(Long money, Account account1, Account account2);
 
 }

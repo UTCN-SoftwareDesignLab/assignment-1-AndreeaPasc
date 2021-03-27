@@ -1,10 +1,9 @@
 package service.client;
 
-import model.ClientInfo;
+import model.Client;
+import model.validation.Notification;
 import repository.EntityNotFoundException;
 import repository.client.ClientRepository;
-
-import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -16,37 +15,38 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public List<ClientInfo> findAll() {
+    public Notification<Client> findAll() {
         return clientRepository.findAll();
     }
 
     @Override
-    public boolean save(ClientInfo clientInfo) {
-        return clientRepository.save(clientInfo);
+    public Notification<Client> save(Client client) {
+        return clientRepository.save(client);
     }
 
     @Override
-    public void removeAll() {
+    public Notification<Client> removeAll() {
         clientRepository.removeAll();
+        return null;
     }
 
     @Override
-    public void update(ClientInfo oldClient, ClientInfo newClient) {
+    public void update(Client oldClient, Client newClient) {
         clientRepository.update(oldClient, newClient);
     }
 
     @Override
-    public boolean delete(ClientInfo clientInfo) {
-        return clientRepository.delete(clientInfo);
+    public Notification<Client> delete(Client client) {
+        return clientRepository.delete(client);
     }
 
     @Override
-    public ClientInfo findById(ClientInfo clientInfo) throws EntityNotFoundException {
-        return clientRepository.findById(clientInfo);
+    public Notification<Client> findById(Client client) throws EntityNotFoundException {
+        return clientRepository.findById(client);
     }
 
     @Override
-    public ClientInfo findByPNC(ClientInfo clientInfo) throws EntityNotFoundException {
-        return clientRepository.findByPNC(clientInfo);
+    public Client findByPNC(Client client) throws EntityNotFoundException {
+        return clientRepository.findByPNC(client);
     }
 }

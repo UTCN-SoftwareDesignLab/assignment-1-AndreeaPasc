@@ -1,7 +1,6 @@
 package repository.account;
 
 import model.Account;
-import model.ClientInfo;
 import model.builder.AccountBuilder;
 import repository.EntityNotFoundException;
 
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static database.Constants.Tables.ACCOUNT;
-import static database.Constants.Tables.CLIENT;
 
 public class AccountRepositoryMySQL implements AccountRepository{
 
@@ -83,10 +81,9 @@ public class AccountRepositoryMySQL implements AccountRepository{
 
     @Override
     public void update(Account oldAccount, Account newAccount) {
-        this.delete(oldAccount);
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO " + ACCOUNT + " values (" + oldAccount.getId() +", ?, ?, ?, ?, ?)");
+                    .prepareStatement("UPDATE " + ACCOUNT + " SET client_id = ?, idNumber = ?, type = ?, moneyAmount = ?, creationDate = ? WHERE id = " + oldAccount.getId());
 
             preparedStatement.setLong(4, newAccount.getMoneyAmount());
             preparedStatement.setLong(1, newAccount.getClientId());

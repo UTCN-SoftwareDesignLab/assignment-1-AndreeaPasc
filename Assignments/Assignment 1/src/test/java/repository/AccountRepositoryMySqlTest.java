@@ -2,9 +2,9 @@ package repository;
 
 import launcher.ComponentFactory;
 import model.Account;
-import model.ClientInfo;
+import model.Client;
 import model.builder.AccountBuilder;
-import model.builder.ClientInfoBuilder;
+import model.builder.ClientBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -43,7 +43,7 @@ public class AccountRepositoryMySqlTest {
 
     @Test
     public void findAllWhenDbNotEmpty() throws Exception {
-        ClientInfo client = new ClientInfoBuilder()
+        Client client = new ClientBuilder()
                 .setAddress("Str. M. Eminescu, 20")
                 .setPersonalNumericalCode(123654L)
                 .setIdentificationNumber(1285L)
@@ -51,7 +51,7 @@ public class AccountRepositoryMySqlTest {
                 .setName("Marian")
                 .build();
         clientRepository.save(client);
-        List<ClientInfo> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll();
 
         Account account = new AccountBuilder()
                 .setClientID(clients.get(0).getId())
@@ -69,7 +69,7 @@ public class AccountRepositoryMySqlTest {
 
     @Test
     public void save(){
-        ClientInfo client = new ClientInfoBuilder()
+        Client client = new ClientBuilder()
                 .setAddress("Str. M. Eminescu, 20")
                 .setPersonalNumericalCode(123654L)
                 .setIdentificationNumber(1285L)
@@ -77,7 +77,7 @@ public class AccountRepositoryMySqlTest {
                 .setName("Marian")
                 .build();
         clientRepository.save(client);
-        List<ClientInfo> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll();
 
         Account account = new AccountBuilder()
                 .setClientID(clients.get(0).getId())
@@ -92,7 +92,7 @@ public class AccountRepositoryMySqlTest {
 
     @Test
     public void findById() throws EntityNotFoundException {
-        ClientInfo client = new ClientInfoBuilder()
+        Client client = new ClientBuilder()
                 .setAddress("Str. M. Eminescu, 20")
                 .setIdentificationNumber(4569L)
                 .setName("Mihai Narius")
@@ -101,7 +101,7 @@ public class AccountRepositoryMySqlTest {
                 .build();
 
         clientRepository.save(client);
-        List<ClientInfo> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll();
 
         Account account = new AccountBuilder()
                 .setClientID(clients.get(0).getId())
@@ -135,7 +135,7 @@ public class AccountRepositoryMySqlTest {
 
     @Test
     public void delete(){
-        ClientInfo client = new ClientInfoBuilder()
+        Client client = new ClientBuilder()
                 .setAddress("Str. M. Eminescu, 20")
                 .setPersonalNumericalCode(123654L)
                 .setIdentificationNumber(1285L)
@@ -143,7 +143,7 @@ public class AccountRepositoryMySqlTest {
                 .setName("Marian")
                 .build();
         clientRepository.save(client);
-        List<ClientInfo> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll();
 
         Account account = new AccountBuilder()
                 .setClientID(clients.get(0).getId())
@@ -160,7 +160,7 @@ public class AccountRepositoryMySqlTest {
 
     @Test
     public void update(){
-        ClientInfo client = new ClientInfoBuilder()
+        Client client = new ClientBuilder()
                 .setAddress("Str. M. Eminescu, 20")
                 .setPersonalNumericalCode(123654L)
                 .setIdentificationNumber(1285L)
@@ -168,7 +168,7 @@ public class AccountRepositoryMySqlTest {
                 .setName("Marian")
                 .build();
         clientRepository.save(client);
-        List<ClientInfo> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll();
 
         Account account = new AccountBuilder()
                 .setClientID(clients.get(0).getId())
@@ -192,7 +192,7 @@ public class AccountRepositoryMySqlTest {
 
     @Test
     public void removeAll(){
-        ClientInfo client = new ClientInfoBuilder()
+        Client client = new ClientBuilder()
                 .setAddress("Str. M. Eminescu, 20")
                 .setIdentificationNumber(4569L)
                 .setName("Mihai Narius")
@@ -201,7 +201,7 @@ public class AccountRepositoryMySqlTest {
                 .build();
 
         clientRepository.save(client);
-        List<ClientInfo> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll();
 
         Account account = new AccountBuilder()
                 .setClientID(clients.get(0).getId())

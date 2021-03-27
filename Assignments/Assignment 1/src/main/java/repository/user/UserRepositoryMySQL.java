@@ -1,18 +1,14 @@
 package repository.user;
 
-import model.ClientInfo;
 import model.User;
-import model.builder.ClientInfoBuilder;
 import model.builder.UserBuilder;
 import model.validation.Notification;
-import repository.EntityNotFoundException;
 import repository.security.RightsRolesRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static database.Constants.Tables.CLIENT;
 import static database.Constants.Tables.USER;
 
 public class UserRepositoryMySQL implements UserRepository {
@@ -35,6 +31,7 @@ public class UserRepositoryMySQL implements UserRepository {
             ResultSet userResultSet = statement.executeQuery(fetchUserSql);
             while(userResultSet.next()){
                 User user = new UserBuilder()
+                        .setId(userResultSet.getLong("id"))
                         .setUsername(userResultSet.getString("username"))
                         .setPassword(userResultSet.getString("password"))
                         .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
@@ -110,14 +107,14 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     public void update(User oldUser, User newUser) {
-        this.delete(oldUser);
-
         try {
             PreparedStatement insertUserStatement = connection
-                    .prepareStatement("INSERT INTO " + USER + " values (" + oldUser.getId() +", ?, ?)");
+                    .prepareStatement("UPDATE " + USER + " SET username = ?, password = ? WHERE id = " + oldUser.getId());
+
             insertUserStatement.setString(1, newUser.getUsername());
             insertUserStatement.setString(2, newUser.getPassword());
             insertUserStatement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

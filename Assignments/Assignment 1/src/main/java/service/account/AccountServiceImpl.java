@@ -1,11 +1,10 @@
 package service.account;
 
 import model.Account;
+import model.Client;
+import model.validation.Notification;
 import repository.EntityNotFoundException;
 import repository.account.AccountRepository;
-import repository.client.ClientRepository;
-
-import java.util.List;
 
 public class AccountServiceImpl implements AccountService{
     private final AccountRepository accountRepository;
@@ -15,18 +14,19 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public List<Account> findAll() {
+    public Notification<Account> findAll() {
         return accountRepository.findAll();
     }
 
     @Override
-    public boolean save(Account account) {
+    public Notification<Client> save(Account account) {
         return accountRepository.save(account);
     }
 
     @Override
-    public void removeAll() {
+    public Notification<Account> removeAll() {
         accountRepository.removeAll();
+        return null;
     }
 
     @Override
@@ -35,18 +35,19 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public boolean delete(Account account) {
+    public Notification<Account> delete(Account account) {
         return accountRepository.delete(account);
     }
 
     @Override
-    public Account findById(Account account) throws EntityNotFoundException {
+    public Notification<Account> findById(Account account) throws EntityNotFoundException {
         return accountRepository.findById(account);
     }
 
     @Override
-    public void transferMoney(Long money, Account account1, Account account2) {
+    public Notification<Account> transferMoney(Long money, Account account1, Account account2) {
         account1.setMoneyAmount(account1.getMoneyAmount() - money);
         account2.setMoneyAmount(account2.getMoneyAmount() + money);
+        return null;
     }
 }

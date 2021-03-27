@@ -1,6 +1,6 @@
 package model;
 
-public class ClientInfo {
+public class Client {
 
     private Long id;
 

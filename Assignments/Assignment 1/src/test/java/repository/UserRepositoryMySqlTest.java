@@ -1,9 +1,6 @@
 package repository;
 
-import database.Constants;
 import launcher.ComponentFactory;
-import model.ClientInfo;
-import model.Right;
 import model.Role;
 import model.User;
 import model.builder.UserBuilder;
@@ -138,7 +135,7 @@ public class UserRepositoryMySqlTest {
 
     @Test
     public void update(){
-        Role role = new Role(1L, EMPLOYEE, null);
+        Role role = new Role(2L, EMPLOYEE, null);
         ArrayList<Role> roles = new ArrayList<Role>();
         roles.add(role);
         User user = new UserBuilder()

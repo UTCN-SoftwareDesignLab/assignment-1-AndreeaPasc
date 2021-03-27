@@ -1,24 +1,22 @@
 package repository.client;
 
-import model.ClientInfo;
-import model.User;
-import model.validation.Notification;
+import model.Client;
 import repository.EntityNotFoundException;
 
 import java.util.List;
 
 public interface ClientRepository {
-    List<ClientInfo> findAll();
+    List<Client> findAll();
 
-    boolean save(ClientInfo clientInfo);
+    boolean save(Client client);
 
     void removeAll();
 
-    void update(ClientInfo oldClient, ClientInfo newClient);
+    void update(Client oldClient, Client newClient);
 
-    boolean delete(ClientInfo clientInfo);
+    boolean delete(Client client);
 
-    ClientInfo findById(ClientInfo clientInfo) throws EntityNotFoundException;
+    Client findById(Client client) throws EntityNotFoundException;
 
-    ClientInfo findByPNC(ClientInfo clientInfo) throws EntityNotFoundException;
+    Client findByPNC(Client client) throws EntityNotFoundException;
 }

@@ -1,23 +1,22 @@
 package service.client;
 
-import model.ClientInfo;
+import model.Client;
+import model.validation.Notification;
 import repository.EntityNotFoundException;
-
-import java.util.List;
 
 public interface ClientService {
 
-    List<ClientInfo> findAll();
+    Notification<Client> findAll();
 
-    boolean save(ClientInfo clientInfo);
+    Notification<Client> save(Client client);
 
-    void removeAll();
+    Notification<Client> removeAll();
 
-    public void update(ClientInfo oldClient, ClientInfo newClient);
+    public void update(Client oldClient, Client newClient);
 
-    boolean delete(ClientInfo clientInfo);
+    Notification<Client> delete(Client client);
 
-    ClientInfo findById(ClientInfo clientInfo) throws EntityNotFoundException;
+    Notification<Client> findById(Client client) throws EntityNotFoundException;
 
-    ClientInfo findByPNC(ClientInfo clientInfo) throws EntityNotFoundException;
+    Client findByPNC(Client client) throws EntityNotFoundException;
 }

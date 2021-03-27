@@ -1,7 +1,7 @@
 model/Role.java
  model.Role
-service/user/AuthenticationServiceMySQL.java
- service.user.AuthenticationServiceMySQL
+service/account/AccountService.java
+ service.account.AccountService
 controller/LoginController.java
  controller.LoginController
  controller.LoginController$1
@@ -21,8 +21,8 @@ model/builder/ClientInfoBuilder.java
  model.builder.ClientInfoBuilder
 model/ClientInfo.java
  model.ClientInfo
-repository/user/UserRepositoryMySQL.java
- repository.user.UserRepositoryMySQL
+service/account/AccountServiceImpl.java
+ service.account.AccountServiceImpl
 model/validation/ResultFetchException.java
  model.validation.ResultFetchException
 service/client/ClientServiceImpl.java
@@ -31,8 +31,8 @@ database/JDBConnectionWrapper.java
  database.JDBConnectionWrapper
 model/User.java
  model.User
-model/builder/UserBuilder.java
- model.builder.UserBuilder
+repository/account/AccountRepositoryMySQL.java
+ repository.account.AccountRepositoryMySQL
 model/Account.java
  model.Account
 repository/EntityNotFoundException.java
@@ -41,8 +41,8 @@ service/client/ClientService.java
  service.client.ClientService
 model/Right.java
  model.Right
-repository/client/ClientRepositoryMySQL.java
- repository.client.ClientRepositoryMySQL
+repository/user/UserRepositoryMySQL.java
+ repository.user.UserRepositoryMySQL
 repository/security/RightsRolesRepository.java
  repository.security.RightsRolesRepository
 model/validation/Notification.java
@@ -67,11 +67,11 @@ database/SQLTableCreationFactory.java
  database.SQLTableCreationFactory
 repository/account/AccountRepository.java
  repository.account.AccountRepository
-service/account/AccountService.java
- service.account.AccountService
+service/user/AuthenticationServiceMySQL.java
+ service.user.AuthenticationServiceMySQL
+model/builder/UserBuilder.java
+ model.builder.UserBuilder
+repository/client/ClientRepositoryMySQL.java
+ repository.client.ClientRepositoryMySQL
 launcher/ComponentFactory.java
  launcher.ComponentFactory
-repository/account/AccountRepositoryMySQL.java
- repository.account.AccountRepositoryMySQL
-service/account/AccountServiceImpl.java
- service.account.AccountServiceImpl
