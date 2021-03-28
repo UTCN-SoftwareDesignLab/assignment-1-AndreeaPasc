@@ -6,17 +6,17 @@ import repository.EntityNotFoundException;
 
 public interface ClientService {
 
-    Notification<Client> findAll();
+    Notification<Boolean> findAll();
 
-    Notification<Client> save(Client client);
+    Notification<Boolean> save(Client client);
 
-    Notification<Client> removeAll();
+    Notification<Boolean> removeAll();
 
-    public void update(Client oldClient, Client newClient);
+    void update(Client oldClient, Client newClient);
 
-    Notification<Client> delete(Client client);
+    Notification<Boolean> delete(Client client);
 
-    Notification<Client> findById(Client client) throws EntityNotFoundException;
+    Notification<Boolean> findById(Client client) throws EntityNotFoundException;
 
     Client findByPNC(Client client) throws EntityNotFoundException;
 }

@@ -1,4 +1,4 @@
-package repository;
+package repository.security;
 
 import launcher.ComponentFactory;
 import org.junit.BeforeClass;

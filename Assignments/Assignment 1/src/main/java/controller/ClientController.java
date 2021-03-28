@@ -33,7 +33,7 @@ public class ClientController {
         public void actionPerformed(ActionEvent e) {
             Client client = createClient();
 
-            Notification<Client> clientNotification = clientService.save(client);
+            Notification<Boolean> clientNotification = clientService.save(client);
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
@@ -48,7 +48,7 @@ public class ClientController {
         public void actionPerformed(ActionEvent e) {
             Client client = createClient();
 
-            Notification<Client> clientNotification = clientService.delete(client);
+            Notification<Boolean> clientNotification = clientService.delete(client);
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
@@ -85,7 +85,7 @@ public class ClientController {
         public void actionPerformed(ActionEvent e) {
             Client client = createClient();
 
-            Notification<Client> clientNotification = null;
+            Notification<Boolean> clientNotification = null;
             try {
                 clientNotification = clientService.findById(client);
             } catch (EntityNotFoundException entityNotFoundException) {
@@ -103,7 +103,7 @@ public class ClientController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Notification<Client> clientNotification = clientService.findAll();
+            Notification<Boolean> clientNotification = clientService.findAll();
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
@@ -116,7 +116,7 @@ public class ClientController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Notification<Client> clientNotification = clientService.removeAll();
+            Notification<Boolean> clientNotification = clientService.removeAll();
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
             } else {

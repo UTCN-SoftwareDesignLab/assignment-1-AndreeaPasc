@@ -1,4 +1,4 @@
-package repository;
+package repository.client;
 
 import launcher.ComponentFactory;
 import model.Client;
@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import repository.EntityNotFoundException;
 import repository.client.ClientRepository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class ClientRepositoryMySqlTest {
     @BeforeClass
     public static void setupClass() {
         ComponentFactory componentFactory = ComponentFactory.instance(true);
-        clientRepository = componentFactory.getClientRepositoryMySQL();
+        clientRepository = componentFactory.getClientRepository();
     }
 
     @Before

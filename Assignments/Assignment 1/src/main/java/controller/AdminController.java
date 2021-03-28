@@ -6,6 +6,8 @@ import model.builder.ClientBuilder;
 import model.builder.UserBuilder;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
+import service.user.UserService;
+import service.user.UserServiceImpl;
 import view.UserView;
 
 import javax.swing.*;
@@ -32,7 +34,7 @@ public class AdminController {
     private class FindAllUserButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Notification<User> clientNotification = userService.findAll();
+            Notification<Boolean> clientNotification = userService.findAll();
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(userView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
@@ -46,7 +48,7 @@ public class AdminController {
         public void actionPerformed(ActionEvent e) {
             User user = createUser();
 
-            Notification<User> userNotification = userService.save(user);
+            Notification<Boolean> userNotification = userService.save(user);
             if(userNotification.hasErrors()){
                 JOptionPane.showMessageDialog(userView.getContentPane(), userNotification.getFormattedErrors());
             } else {
@@ -60,7 +62,7 @@ public class AdminController {
         public void actionPerformed(ActionEvent e) {
             User user = createUser();
 
-            Notification<User> userNotification = userService.delete(user);
+            Notification<Boolean> userNotification = userService.delete(user);
             if(userNotification.hasErrors()){
                 JOptionPane.showMessageDialog(userService.getContentPane(), userNotification.getFormattedErrors());
             } else {
@@ -73,7 +75,7 @@ public class AdminController {
         @Override
         public void actionPerformed(ActionEvent e) {
             User newUser = createUser();
-            Notification<User> userNotification = null;
+            Notification<Boolean> userNotification = null;
             try {
                 userNotification = userService.findById(userView.getId());
             } catch (EntityNotFoundException entityNotFoundException) {
@@ -92,7 +94,7 @@ public class AdminController {
     public class RemoveAllUserButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            Notification<User> clientNotification = userService.removeALl();
+            Notification<Boolean> clientNotification = userService.removeAll();
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(userView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
@@ -107,11 +109,7 @@ public class AdminController {
             User user = createUser();
 
             Notification<User> userNotification = null;
-            try {
-                userNotification = userService.findByUsernameAndPassword(user);
-            } catch (EntityNotFoundException entityNotFoundException) {
-                entityNotFoundException.printStackTrace();
-            }
+            userNotification = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
             if(userNotification.hasErrors()){
                 JOptionPane.showMessageDialog(userView.getContentPane(), userNotification.getFormattedErrors());
             } else {

@@ -1,8 +1,11 @@
 package repository.user;
 
+import model.Client;
 import model.User;
+import model.builder.ClientBuilder;
 import model.builder.UserBuilder;
 import model.validation.Notification;
+import repository.EntityNotFoundException;
 import repository.security.RightsRolesRepository;
 
 import java.sql.*;
@@ -69,6 +72,27 @@ public class UserRepositoryMySQL implements UserRepository {
             findByUsernameAndPasswordNotification.addError("Something is wrong with the Database");
         }
         return findByUsernameAndPasswordNotification;
+    }
+
+    @Override
+    public User findById(User user) throws EntityNotFoundException {
+        try{
+            Statement statement = connection.createStatement();
+            String fetchUserSql = "SELECT * FROM user WHERE id = " + user.getId();
+            ResultSet userResultSet = statement.executeQuery(fetchUserSql);
+            if(userResultSet.next()){
+                return new UserBuilder()
+                        .setId(userResultSet.getLong("id"))
+                        .setUsername(userResultSet.getString("username"))
+                        .setPassword(userResultSet.getString("password"))
+                        .build();
+            }else {
+                throw new EntityNotFoundException(user.getId(), User.class.getSimpleName());
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            throw new EntityNotFoundException(user.getId(), User.class.getSimpleName());
+        }
     }
 
     @Override

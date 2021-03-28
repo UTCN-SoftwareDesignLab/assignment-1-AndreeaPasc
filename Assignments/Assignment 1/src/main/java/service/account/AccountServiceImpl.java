@@ -1,10 +1,12 @@
 package service.account;
 
 import model.Account;
-import model.Client;
+import model.validation.AccountValidator;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
 import repository.account.AccountRepository;
+
+import java.util.List;
 
 public class AccountServiceImpl implements AccountService{
     private final AccountRepository accountRepository;
@@ -14,19 +16,50 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Notification<Account> findAll() {
-        return accountRepository.findAll();
+    public Notification<Boolean> findAll() {
+        AccountValidator accountValidator = null;
+        boolean valid = false;
+        List<Account> accounts = accountRepository.findAll();
+        for(Account account: accounts) {
+            accountValidator = new AccountValidator(account);
+            valid = accountValidator.validate(account.getMoneyAmount());
+        }
+        Notification<Boolean> accountNotification = new Notification<>();
+        if(valid){
+            accountNotification.setResult(!accountRepository.findAll().isEmpty());
+        }else{
+            assert accountValidator != null;
+            accountValidator.getErrors().forEach(accountNotification::addError);
+            accountNotification.setResult(Boolean.FALSE);
+        }
+        return accountNotification;
     }
 
     @Override
-    public Notification<Client> save(Account account) {
-        return accountRepository.save(account);
+    public Notification<Boolean> save(Account account) {
+        AccountValidator accountValidator = new AccountValidator(account);
+        boolean valid = accountValidator.validate(account.getMoneyAmount());
+        Notification<Boolean> accountNotification = new Notification<>();
+        if(valid){
+            accountNotification.setResult(accountRepository.save(account));
+        }else{
+            accountValidator.getErrors().forEach(accountNotification::addError);
+            accountNotification.setResult(Boolean.FALSE);
+        }
+        return accountNotification;
     }
 
     @Override
-    public Notification<Account> removeAll() {
+    public Notification<Boolean> removeAll() {
         accountRepository.removeAll();
-        return null;
+        Notification<Boolean> accountNotification = new Notification<>();
+        List<Account> accounts = accountRepository.findAll();
+        if(accounts.isEmpty()){
+            accountNotification.setResult(Boolean.TRUE);
+        }else{
+            accountNotification.setResult(Boolean.FALSE);
+        }
+        return accountNotification;
     }
 
     @Override
@@ -35,13 +68,33 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Notification<Account> delete(Account account) {
-        return accountRepository.delete(account);
+    public Notification<Boolean> delete(Account account) {
+        AccountValidator accountValidator = new AccountValidator(account);
+        boolean valid = accountValidator.validate(account.getMoneyAmount());
+        Notification<Boolean> accountNotification = new Notification<>();
+        if(valid){
+            accountNotification.setResult(accountRepository.delete(account));
+        }else{
+            accountValidator.getErrors().forEach(accountNotification::addError);
+            accountNotification.setResult(Boolean.FALSE);
+        }
+        return accountNotification;
     }
 
     @Override
-    public Notification<Account> findById(Account account) throws EntityNotFoundException {
-        return accountRepository.findById(account);
+    public Notification<Boolean> findById(Account account) throws EntityNotFoundException {
+        AccountValidator accountValidator = new AccountValidator(account);
+        boolean valid = accountValidator.validate(account.getMoneyAmount());
+        Notification<Boolean> accountNotification = new Notification<>();
+        List<Account> accounts = null;
+        if(valid){
+            accounts.add(accountRepository.findById(account));
+            accountNotification.setResult(!accounts.isEmpty());
+        }else{
+            accountValidator.getErrors().forEach(accountNotification::addError);
+            accountNotification.setResult(Boolean.FALSE);
+        }
+        return accountNotification;
     }
 
     @Override

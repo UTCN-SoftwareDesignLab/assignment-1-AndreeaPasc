@@ -36,7 +36,7 @@ public class AccountController {
         public void actionPerformed(ActionEvent e) {
             Account account = createAccount();
 
-            Notification<Client> clientNotification = accountService.save(account);
+            Notification<Boolean> clientNotification = accountService.save(account);
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(accountView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
@@ -50,7 +50,7 @@ public class AccountController {
         public void actionPerformed(ActionEvent e) {
             Account account = createAccount();
 
-            Notification<Account> accountNotification = accountService.delete(account);
+            Notification<Boolean> accountNotification = accountService.delete(account);
             if(accountNotification.hasErrors()){
                 JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
             } else {
@@ -85,7 +85,7 @@ public class AccountController {
         public void actionPerformed(ActionEvent e) {
             Account account = createAccount();
 
-            Notification<Account> accountNotification = null;
+            Notification<Boolean> accountNotification = null;
             try {
                 accountNotification = accountService.findById(account);
             } catch (EntityNotFoundException entityNotFoundException) {
@@ -102,7 +102,7 @@ public class AccountController {
     public class FindAllAccountButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            Notification<Account> accountNotification = accountService.findAll();
+            Notification<Boolean> accountNotification = accountService.findAll();
             if(accountNotification.hasErrors()){
                 JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
             } else {
@@ -114,7 +114,7 @@ public class AccountController {
     public class RemoveAllAccountButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            Notification<Account> accountNotification = accountService.removeAll();
+            Notification<Boolean> accountNotification = accountService.removeAll();
             if(accountNotification.hasErrors()){
                 JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
             } else {

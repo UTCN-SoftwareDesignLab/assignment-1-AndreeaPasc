@@ -5,19 +5,21 @@ import model.Client;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
 
+import java.util.List;
+
 public interface AccountService {
 
-    Notification<Account> findAll();
+    Notification<Boolean> findAll();
 
-    Notification<Client> save(Account account);
+    Notification<Boolean> save(Account account);
 
-    Notification<Account> removeAll();
+    Notification<Boolean> removeAll();
 
     void update(Account oldAccount, Account newAccount);
 
-    Notification<Account> delete(Account account);
+    Notification<Boolean> delete(Account account);
 
-    Notification<Account> findById(Account account) throws EntityNotFoundException;
+    Notification<Boolean> findById(Account account) throws EntityNotFoundException;
 
     Notification<Account> transferMoney(Long money, Account account1, Account account2);
 

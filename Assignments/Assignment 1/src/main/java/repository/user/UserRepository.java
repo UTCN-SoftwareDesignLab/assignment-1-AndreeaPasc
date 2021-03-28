@@ -2,6 +2,7 @@ package repository.user;
 
 import model.User;
 import model.validation.Notification;
+import repository.EntityNotFoundException;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface UserRepository {
 
     boolean delete(User user);
 
-    //User findById(User user);
+    User findById(User user) throws EntityNotFoundException;
 }
