@@ -1,3 +1,5 @@
+service/user/UserServiceImplTest.java
+ service.user.UserServiceImplTest
 repository/client/ClientRepositoryMySqlTest.java
  repository.client.ClientRepositoryMySqlTest
 repository/account/AccountRepositoryMySqlTest.java
@@ -6,7 +8,5 @@ repository/security/RightsRolesRepositoryMySqlTest.java
  repository.security.RightsRolesRepositoryMySqlTest
 service/user/AuthenticationServiceMySQLTest.java
  service.user.AuthenticationServiceMySQLTest
-service/user/UserServiceImplTest.java
- service.user.UserServiceImplTest
 repository/user/UserRepositoryMySqlTest.java
  repository.user.UserRepositoryMySqlTest

@@ -27,15 +27,15 @@ database/JDBConnectionWrapper.java
  database.JDBConnectionWrapper
 model/User.java
  model.User
-controller/AccountController.java
- controller.AccountController
- controller.AccountController$DeleteAccountButtonListener
- controller.AccountController$FindAllAccountButtonListener
- controller.AccountController$FindByIdAccountButtonListener
- controller.AccountController$RemoveAllAccountButtonListener
- controller.AccountController$SetSaveAccountButtonListener
- controller.AccountController$TransferMoneyButtonListener
- controller.AccountController$UpdateAccountButtonListener
+controller/AdminController.java
+ controller.AdminController
+ controller.AdminController$1
+ controller.AdminController$FindAllUserButtonListener
+ controller.AdminController$FindByUsernameAndPasswordButtonListener
+ controller.AdminController$RemoveAllUserButtonListener
+ controller.AdminController$RemoveUserButtonListener
+ controller.AdminController$SaveUserButtonListener
+ controller.AdminController$UpdateUserButtonListener
 service/account/AccountService.java
  service.account.AccountService
 model/Account.java
@@ -50,8 +50,8 @@ model/Right.java
  model.Right
 repository/client/ClientRepositoryMySQL.java
  repository.client.ClientRepositoryMySQL
-launcher/ComponentFactory.java
- launcher.ComponentFactory
+model/validation/ClientValidator.java
+ model.validation.ClientValidator
 view/AccountView.java
  view.AccountView
 model/validation/Notification.java
@@ -60,8 +60,15 @@ service/user/UserServiceImpl.java
  service.user.UserServiceImpl
 model/validation/AccountValidator.java
  model.validation.AccountValidator
-launcher/Launcher.java
- launcher.Launcher
+controller/AccountController.java
+ controller.AccountController
+ controller.AccountController$DeleteAccountButtonListener
+ controller.AccountController$FindAllAccountButtonListener
+ controller.AccountController$FindByIdAccountButtonListener
+ controller.AccountController$RemoveAllAccountButtonListener
+ controller.AccountController$SetSaveAccountButtonListener
+ controller.AccountController$TransferMoneyButtonListener
+ controller.AccountController$UpdateAccountButtonListener
 view/ClientView.java
  view.ClientView
 database/Constants.java
@@ -105,14 +112,7 @@ model/builder/ClientBuilder.java
  model.builder.ClientBuilder
 service/client/ClientServiceImpl.java
  service.client.ClientServiceImpl
-model/validation/ClientValidator.java
- model.validation.ClientValidator
-controller/AdminController.java
- controller.AdminController
- controller.AdminController$1
- controller.AdminController$FindAllUserButtonListener
- controller.AdminController$FindByUsernameAndPasswordButtonListener
- controller.AdminController$RemoveAllUserButtonListener
- controller.AdminController$RemoveUserButtonListener
- controller.AdminController$SaveUserButtonListener
- controller.AdminController$UpdateUserButtonListener
+launcher/Launcher.java
+ launcher.Launcher
+launcher/ComponentFactory.java
+ launcher.ComponentFactory
