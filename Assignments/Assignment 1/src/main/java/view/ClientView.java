@@ -29,12 +29,17 @@ public class ClientView extends JFrame{
         initializeFields();
         setLayout(new BoxLayout(getContentPane(), Y_AXIS));
 
+        add(new JLabel("Client Id"));
         add(tfClientId);
+        add(new JLabel("Client Name"));
         add(tfClientName);
-        add(tfClientAddress);
+        add(new JLabel("Client Personal Numerical Code "));
         add(tfClientPNC);
+        add(new JLabel("Client Identity Card Number"));
         add(tfClientIdCardNumber);
+        add(new JLabel("Client Phone Number"));
         add(tfClientPhoneNumber);
+        add(new JLabel("Client Address"));
         add(tfClientAddress);
 
         add(btnDeleteClient);

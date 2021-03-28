@@ -26,8 +26,11 @@ public class AdminView extends JFrame {
         initializeFields();
         setLayout(new BoxLayout(getContentPane(), Y_AXIS));
 
+        add(new JLabel("User Id"));
         add(tfUserId);
+        add(new JLabel("User username"));
         add(tfUserUsername);
+        add(new JLabel("User password"));
         add(tfUserPassword);
         //add(tfUserRoles);
 
@@ -50,9 +53,9 @@ public class AdminView extends JFrame {
         btnFindByIdUser = new JButton("Find user by Id");
         btnRemoveAllUser = new JButton("Delete all users");
         btnFindByUsernameAndPasswordUser = new JButton("Find by username and password");
-
+        
         tfUserId = new JTextField();
-        tfUserPassword = new JTextField();
+        tfUserUsername = new JTextField();
         tfUserPassword = new JTextField();
         //tfUserRoles = new JTextField();
     }

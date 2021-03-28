@@ -29,8 +29,8 @@ public class ClientValidator {
 
     private void validatePNC(Client client){
         int length = Long.toString(client.getPersonalNumericalCode()).length();
-        if(length != 13)
-            errors.add("Id number should have length 13");
+        if(length != 10)
+            errors.add("Id number should have length 10");
     }
 
     private void validatePhoneNUmber(Client client){

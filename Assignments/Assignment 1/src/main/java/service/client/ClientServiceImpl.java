@@ -69,14 +69,13 @@ public class ClientServiceImpl implements ClientService {
     public Notification<Boolean> findById(Long id) throws EntityNotFoundException {
         Client client = clientRepository.findById(id);
         Notification<Boolean> clientNotification = new Notification<>();
-        List<Client> clients = null;
+        List<Client> clients = clientRepository.findAll();
         clients.add(client);
         if(!clients.isEmpty()){
             clientNotification.setResult(Boolean.TRUE);
         }else{
             clientNotification.setResult(Boolean.FALSE);
         }
-
         return clientNotification;
     }
 

@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService{
     public Notification<Boolean> findById(Long id) throws EntityNotFoundException {
         User user = userRepository.findById(id);
         Notification<Boolean> userNotification = new Notification<>();
-        List<User> users = null;
+        List<User> users = userRepository.findAll();
         users.add(user);
         if(!users.isEmpty()){
             userNotification.setResult(Boolean.TRUE);

@@ -49,8 +49,8 @@ public class LoginController {
                 if(currentUser.getRoles().get(0).equals(ADMINISTRATOR)){
                     adminView.setVisible();
                 }else{
-                    clientView.setVisible();
                     accountView.setVisible();
+                    clientView.setVisible();
                 }
             }
         }

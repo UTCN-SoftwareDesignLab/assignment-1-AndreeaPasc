@@ -32,12 +32,19 @@ public class AccountView extends JFrame {
         initializeFields();
         setLayout(new BoxLayout(getContentPane(), Y_AXIS));
 
+        add(new JLabel("Account Id"));
         add(tfAccountId);
+        add(new JLabel("Account Client Id"));
         add(tfAccountClientId);
+        add(new JLabel("Account Identification Number"));
         add(tfAccountIdCardNumber);
+        add(new JLabel("Account Type"));
         add(tfAccountType);
+        add(new JLabel("Account Money Amount"));
         add(tfAccountMoneyAmount);
+        add(new JLabel("Account Creation Date"));
         add(tfAccountCreationDate);
+        add(new JLabel("Transfer money between 2 accounts"));
         add(tfAccountTransferMoney);
 
         add(btnFindByIdAccount);

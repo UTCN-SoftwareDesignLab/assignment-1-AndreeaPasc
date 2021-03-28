@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService{
     public Notification<Boolean> findById(Long id) throws EntityNotFoundException {
         Account account = accountRepository.findById(id);
         Notification<Boolean> accountNotification = new Notification<>();
-        List<Account> accounts = null;
+        List<Account> accounts = accountRepository.findAll();
         accounts.add(account);
         if(!accounts.isEmpty()){
             accountNotification.setResult(Boolean.TRUE);

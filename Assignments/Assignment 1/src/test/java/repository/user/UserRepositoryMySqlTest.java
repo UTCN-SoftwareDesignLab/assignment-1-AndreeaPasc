@@ -153,4 +153,5 @@ public class UserRepositoryMySqlTest {
         userRepository.update(userRepository.findAll().get(0), user2);
         assertEquals(userRepository.findAll().get(0).getUsername(), user2.getUsername());
     }
+
 }
