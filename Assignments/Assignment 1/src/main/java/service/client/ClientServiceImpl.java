@@ -18,22 +18,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Notification<Boolean> findAll() {
-        ClientValidator clientValidator = null;
-        boolean valid = false;
         List<Client> clients = clientRepository.findAll();
-        for(Client client: clients) {
-            clientValidator = new ClientValidator(client);
-            valid = clientValidator.validate();
-        }
-        Notification<Boolean> clientNotification = new Notification<>();
-        if(valid){
-            clientNotification.setResult(!clientRepository.findAll().isEmpty());
+        Notification<Boolean> accountNotification = new Notification<>();
+        if(!clients.isEmpty()){
+            accountNotification.setResult(Boolean.TRUE);
         }else{
-            assert clientValidator != null;
-            clientValidator.getErrors().forEach(clientNotification::addError);
-            clientNotification.setResult(Boolean.FALSE);
+            accountNotification.setResult(Boolean.FALSE);
         }
-        return clientNotification;
+        return accountNotification;
     }
 
     @Override
@@ -69,32 +61,22 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Notification<Boolean> delete(Client client) {
-        ClientValidator clientValidator = new ClientValidator(client);
-        boolean valid = clientValidator.validate();
-        Notification<Boolean> clientNotification = new Notification<>();
-        if(valid){
-            clientNotification.setResult(clientRepository.delete(client));
-        }else{
-            clientValidator.getErrors().forEach(clientNotification::addError);
-            clientNotification.setResult(Boolean.FALSE);
-        }
-        return clientNotification;
+    public void delete(Client client) {
+        clientRepository.delete(client);
     }
 
     @Override
-    public Notification<Boolean> findById(Client client) throws EntityNotFoundException {
-        ClientValidator clientValidator = new ClientValidator(client);
-        boolean valid = clientValidator.validate();
+    public Notification<Boolean> findById(Long id) throws EntityNotFoundException {
+        Client client = clientRepository.findById(id);
         Notification<Boolean> clientNotification = new Notification<>();
         List<Client> clients = null;
-        if(valid){
-            clients.add(clientRepository.findById(client));
-            clientNotification.setResult(!clients.isEmpty());
+        clients.add(client);
+        if(!clients.isEmpty()){
+            clientNotification.setResult(Boolean.TRUE);
         }else{
-            clientValidator.getErrors().forEach(clientNotification::addError);
             clientNotification.setResult(Boolean.FALSE);
         }
+
         return clientNotification;
     }
 

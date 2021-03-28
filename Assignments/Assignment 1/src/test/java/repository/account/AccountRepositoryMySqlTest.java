@@ -128,7 +128,7 @@ public class AccountRepositoryMySqlTest {
         Account account0 = accounts.get(0);
 
         for (Account acc : accounts) {
-            if(acc.getId().equals(accountRepository.findById(account0).getId()))
+            if(acc.getId().equals(accountRepository.findById(account0.getId()).getId()))
                 found = acc;
         }
         Assert.assertNotNull(found);

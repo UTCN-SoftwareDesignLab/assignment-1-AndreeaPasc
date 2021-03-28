@@ -1,7 +1,7 @@
 model/Role.java
  model.Role
-service/account/AccountService.java
- service.account.AccountService
+service/user/AuthenticationServiceMySQL.java
+ service.user.AuthenticationServiceMySQL
 controller/LoginController.java
  controller.LoginController
  controller.LoginController$1
@@ -17,38 +17,53 @@ model/builder/AccountBuilder.java
  model.builder.AccountBuilder
 model/validation/UserValidator.java
  model.validation.UserValidator
-model/builder/ClientInfoBuilder.java
- model.builder.ClientInfoBuilder
-model/ClientInfo.java
- model.ClientInfo
-service/account/AccountServiceImpl.java
- service.account.AccountServiceImpl
+repository/user/UserRepositoryMySQL.java
+ repository.user.UserRepositoryMySQL
 model/validation/ResultFetchException.java
  model.validation.ResultFetchException
-service/client/ClientServiceImpl.java
- service.client.ClientServiceImpl
+repository/account/AccountRepositoryMySQL.java
+ repository.account.AccountRepositoryMySQL
 database/JDBConnectionWrapper.java
  database.JDBConnectionWrapper
 model/User.java
  model.User
-repository/account/AccountRepositoryMySQL.java
- repository.account.AccountRepositoryMySQL
+controller/AccountController.java
+ controller.AccountController
+ controller.AccountController$DeleteAccountButtonListener
+ controller.AccountController$FindAllAccountButtonListener
+ controller.AccountController$FindByIdAccountButtonListener
+ controller.AccountController$RemoveAllAccountButtonListener
+ controller.AccountController$SetSaveAccountButtonListener
+ controller.AccountController$TransferMoneyButtonListener
+ controller.AccountController$UpdateAccountButtonListener
+service/account/AccountService.java
+ service.account.AccountService
 model/Account.java
  model.Account
 repository/EntityNotFoundException.java
  repository.EntityNotFoundException
 service/client/ClientService.java
  service.client.ClientService
+model/Client.java
+ model.Client
 model/Right.java
  model.Right
-repository/user/UserRepositoryMySQL.java
- repository.user.UserRepositoryMySQL
-repository/security/RightsRolesRepository.java
- repository.security.RightsRolesRepository
+repository/client/ClientRepositoryMySQL.java
+ repository.client.ClientRepositoryMySQL
+launcher/ComponentFactory.java
+ launcher.ComponentFactory
+view/AccountView.java
+ view.AccountView
 model/validation/Notification.java
  model.validation.Notification
+service/user/UserServiceImpl.java
+ service.user.UserServiceImpl
+model/validation/AccountValidator.java
+ model.validation.AccountValidator
 launcher/Launcher.java
  launcher.Launcher
+view/ClientView.java
+ view.ClientView
 database/Constants.java
  database.Constants
  database.Constants$Rights
@@ -57,21 +72,47 @@ database/Constants.java
  database.Constants$Tables
 service/user/AuthenticationService.java
  service.user.AuthenticationService
-repository/user/UserRepository.java
- repository.user.UserRepository
-database/DBConnectionFactory.java
- database.DBConnectionFactory
-database/Boostraper.java
- database.Boostraper
 database/SQLTableCreationFactory.java
  database.SQLTableCreationFactory
+database/DBConnectionFactory.java
+ database.DBConnectionFactory
+service/account/AccountServiceImpl.java
+ service.account.AccountServiceImpl
 repository/account/AccountRepository.java
  repository.account.AccountRepository
-service/user/AuthenticationServiceMySQL.java
- service.user.AuthenticationServiceMySQL
 model/builder/UserBuilder.java
  model.builder.UserBuilder
-repository/client/ClientRepositoryMySQL.java
- repository.client.ClientRepositoryMySQL
-launcher/ComponentFactory.java
- launcher.ComponentFactory
+controller/ClientController.java
+ controller.ClientController
+ controller.ClientController$1
+ controller.ClientController$DeleteClientButtonListener
+ controller.ClientController$FindAllClientButtonListener
+ controller.ClientController$FindByIdClientButtonListener
+ controller.ClientController$RemoveAllClientButtonListener
+ controller.ClientController$SetSaveClientButtonListener
+ controller.ClientController$UpdateClientButtonListener
+database/Boostraper.java
+ database.Boostraper
+repository/security/RightsRolesRepository.java
+ repository.security.RightsRolesRepository
+view/AdminView.java
+ view.AdminView
+service/user/UserService.java
+ service.user.UserService
+repository/user/UserRepository.java
+ repository.user.UserRepository
+model/builder/ClientBuilder.java
+ model.builder.ClientBuilder
+service/client/ClientServiceImpl.java
+ service.client.ClientServiceImpl
+model/validation/ClientValidator.java
+ model.validation.ClientValidator
+controller/AdminController.java
+ controller.AdminController
+ controller.AdminController$1
+ controller.AdminController$FindAllUserButtonListener
+ controller.AdminController$FindByUsernameAndPasswordButtonListener
+ controller.AdminController$RemoveAllUserButtonListener
+ controller.AdminController$RemoveUserButtonListener
+ controller.AdminController$SaveUserButtonListener
+ controller.AdminController$UpdateUserButtonListener

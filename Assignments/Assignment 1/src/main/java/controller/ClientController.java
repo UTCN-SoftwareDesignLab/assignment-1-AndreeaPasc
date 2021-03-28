@@ -1,5 +1,6 @@
 package controller;
 
+import model.Account;
 import model.Client;
 import model.builder.ClientBuilder;
 import model.validation.Notification;
@@ -10,6 +11,7 @@ import view.ClientView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ClientController {
     private ClientView clientView;
@@ -19,12 +21,12 @@ public class ClientController {
         this.clientView = clientView;
         this.clientService = clientService;
 
-        clientView.setSaveClientButtinListener(new SetSaveClientButtonListener);
-        clientView.setRemoveClientButtonListeer(new DeleteClientButtonListener);
-        clientView.setUpdateClientButtonListener(new UpdateClientButtonListener);
-        clientView.setFindByIdClientButtonListener(new FindByIdClientButtonListener);
-        clientView.setFindAllClientButtonListener(new FindAllClientButtonListener);
-        clientView.setRemoveAllClientButtonListener(new RemoveAllClientButtonListener);
+        clientView.setSaveClientButtonListener(new SetSaveClientButtonListener());
+        clientView.setRemoveClientButtonListener(new DeleteClientButtonListener());
+        clientView.setUpdateClientButtonListener(new UpdateClientButtonListener());
+        clientView.setFindByIdClientButtonListener(new FindByIdClientButtonListener());
+        clientView.setFindAllClientButtonListener(new FindAllClientButtonListener());
+        clientView.setRemoveAllClientButtonListener(new RemoveAllClientButtonListener());
     }
 
     private class SetSaveClientButtonListener implements ActionListener{
@@ -47,12 +49,14 @@ public class ClientController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Client client = createClient();
+            List<Client> clients = null;
+            clients.add(client);
+            clientService.delete(client);
 
-            Notification<Boolean> clientNotification = clientService.delete(client);
-            if(clientNotification.hasErrors()){
-                JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
+            if(!clients.isEmpty()){
+                JOptionPane.showMessageDialog(clientView.getContentPane(), "Could not delete client!");
             } else {
-                JOptionPane.showMessageDialog(clientView.getContentPane(), "Removed client successfully!");
+                JOptionPane.showMessageDialog(clientView.getContentPane(), "Deleted account successfully!");
             }
         }
     }
@@ -62,8 +66,7 @@ public class ClientController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Client newClient = createClient();
-
-            Notification<Client> clientNotification = null;
+            Notification<Boolean> clientNotification = null;
             try {
                 clientNotification = clientService.findById(clientView.getId());
             } catch (EntityNotFoundException entityNotFoundException) {
@@ -84,10 +87,9 @@ public class ClientController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Client client = createClient();
-
             Notification<Boolean> clientNotification = null;
             try {
-                clientNotification = clientService.findById(client);
+                clientNotification = clientService.findById(client.getId());
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
@@ -127,11 +129,12 @@ public class ClientController {
 
     private Client createClient(){
         Client client = new ClientBuilder()
+                .setId(clientView.getId())
                 .setAddress(clientView.getAddress())
                 .setIdentificationNumber(clientView.getIdentificationNumber())
                 .setPersonalNumericalCode(clientView.getPersonalNumericalCode())
                 .setName(clientView.getName())
-                .setPhoneNumber(clientView.getPhoneNUmber)
+                .setPhoneNumber(clientView.getPhoneNumber())
                 .build();
         return client;
     }

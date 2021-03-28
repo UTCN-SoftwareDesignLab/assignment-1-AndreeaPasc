@@ -1,34 +1,32 @@
 package controller;
 
-import model.Client;
 import model.User;
-import model.builder.ClientBuilder;
 import model.builder.UserBuilder;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
 import service.user.UserService;
-import service.user.UserServiceImpl;
-import view.UserView;
+import view.AdminView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class AdminController {
 
-    private UserView userView;
+    private AdminView adminView;
     private UserService userService;
 
-    public AdminController(UserView userView, UserService userService) {
-        this.userView = userView;
+    public AdminController(AdminView adminView, UserService userService) {
+        this.adminView = adminView;
         this.userService = userService;
 
-        userView.setFindAllUserButtonListener(new AdminController.FindAllUserButtonListener);
-        userView.setSaveUserButtonListener(new AdminController.SaveUserButtonListener);
-        userView.setRemoveUserButtonListener(new AdminController.RemoveUserButtonListener);
-        userView.setUpdateUserButtonListener(new AdminController.UpdateUserButtonListener);
-        userView.setRemoveAllUserButtonListener(new AdminController.RemoveAllUserButtonListener);
-        userView.setFindByUsernameAndPasswordButtonListener(new AdminController.FindByUsernameAndPasswordButtonListener);
+        adminView.setFindAllUserButtonListener(new FindAllUserButtonListener());
+        adminView.setSaveUserButtonListener(new SaveUserButtonListener());
+        adminView.setRemoveUserButtonListener(new RemoveUserButtonListener());
+        adminView.setUpdateUserButtonListener(new UpdateUserButtonListener());
+        adminView.setRemoveAllUserButtonListener(new RemoveAllUserButtonListener());
+        adminView.setFindByUsernameAndPasswordButtonListener(new FindByUsernameAndPasswordButtonListener());
     }
 
     private class FindAllUserButtonListener implements ActionListener {
@@ -36,9 +34,9 @@ public class AdminController {
         public void actionPerformed(ActionEvent e) {
             Notification<Boolean> clientNotification = userService.findAll();
             if(clientNotification.hasErrors()){
-                JOptionPane.showMessageDialog(userView.getContentPane(), clientNotification.getFormattedErrors());
+                JOptionPane.showMessageDialog(adminView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
-                JOptionPane.showMessageDialog(userView.getContentPane(), "Found all users successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Found all users successfully!");
             }
         }
     }
@@ -50,9 +48,9 @@ public class AdminController {
 
             Notification<Boolean> userNotification = userService.save(user);
             if(userNotification.hasErrors()){
-                JOptionPane.showMessageDialog(userView.getContentPane(), userNotification.getFormattedErrors());
+                JOptionPane.showMessageDialog(adminView.getContentPane(), userNotification.getFormattedErrors());
             } else {
-                JOptionPane.showMessageDialog(userView.getContentPane(), "Saved client successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Saved client successfully!");
             }
         }
     }
@@ -61,12 +59,13 @@ public class AdminController {
         @Override
         public void actionPerformed(ActionEvent e) {
             User user = createUser();
-
-            Notification<Boolean> userNotification = userService.delete(user);
-            if(userNotification.hasErrors()){
-                JOptionPane.showMessageDialog(userService.getContentPane(), userNotification.getFormattedErrors());
+            List<User> users = null;
+            users.add(user);
+            userService.delete(user);
+            if(!users.isEmpty()){
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Could not delete user!");
             } else {
-                JOptionPane.showMessageDialog(userService.getContentPane(), "Removed user successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Removed user successfully!");
             }
         }
     }
@@ -77,16 +76,16 @@ public class AdminController {
             User newUser = createUser();
             Notification<Boolean> userNotification = null;
             try {
-                userNotification = userService.findById(userView.getId());
+                userNotification = userService.findById(adminView.getId());
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
             if(userNotification.hasErrors()){
-                JOptionPane.showMessageDialog(userView.getContentPane(), userNotification.getFormattedErrors());
+                JOptionPane.showMessageDialog(adminView.getContentPane(), userNotification.getFormattedErrors());
             } else {
-                User oldUser = new UserBuilder().setId(userView.getId()).build();
+                User oldUser = new UserBuilder().setId(adminView.getId()).build();
                 userService.update(oldUser, newUser);
-                JOptionPane.showMessageDialog(userView.getContentPane(), "Updated user successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Updated user successfully!");
             }
         }
     }
@@ -96,9 +95,9 @@ public class AdminController {
         public void actionPerformed(ActionEvent e) {
             Notification<Boolean> clientNotification = userService.removeAll();
             if(clientNotification.hasErrors()){
-                JOptionPane.showMessageDialog(userView.getContentPane(), clientNotification.getFormattedErrors());
+                JOptionPane.showMessageDialog(adminView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
-                JOptionPane.showMessageDialog(userView.getContentPane(), "Removed all users successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Removed all users successfully!");
             }
         }
     }
@@ -111,17 +110,19 @@ public class AdminController {
             Notification<User> userNotification = null;
             userNotification = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
             if(userNotification.hasErrors()){
-                JOptionPane.showMessageDialog(userView.getContentPane(), userNotification.getFormattedErrors());
+                JOptionPane.showMessageDialog(adminView.getContentPane(), userNotification.getFormattedErrors());
             } else {
-                JOptionPane.showMessageDialog(userView.getContentPane(), "Found user successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Found user successfully!");
             }
         }
     }
 
     private User createUser(){
         User user = new UserBuilder()
-                .setUsername(userView.getUsername())
-                .setPassword(userView.getPassword())
+                .setId(adminView.getId())
+                .setUsername(adminView.getUsername())
+                .setPassword(adminView.getPassword())
+                //.setRoles(adminView.getRoles())
                 .build();
         return user;
     }

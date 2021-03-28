@@ -15,7 +15,7 @@ public interface UserService {
 
     void update(User oldUser, User newUser);
 
-    Notification<Boolean> delete(User user);
+    void delete(User user);
 
-    Notification<Boolean> findById(User user) throws EntityNotFoundException;
+    Notification<Boolean> findById(Long id) throws EntityNotFoundException;
 }

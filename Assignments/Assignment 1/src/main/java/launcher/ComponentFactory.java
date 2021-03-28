@@ -24,7 +24,7 @@ import service.user.UserServiceImpl;
 import view.AccountView;
 import view.ClientView;
 import view.LoginView;
-import view.UserView;
+import view.AdminView;
 
 import java.sql.Connection;
 
@@ -40,7 +40,7 @@ public class ComponentFactory {
     private final ClientController clientController;
 
     private final AdminController adminController;
-    private final UserView userView;
+    private final AdminView adminView;
 
     private final AuthenticationService authenticationService;
     private final AccountService accountService;
@@ -51,7 +51,6 @@ public class ComponentFactory {
     private final RightsRolesRepository rightsRolesRepository;
     private final ClientRepository clientRepository;
     private final AccountRepository accountRepository;
-
 
     private static ComponentFactory instance;
 
@@ -75,14 +74,16 @@ public class ComponentFactory {
         this.clientService = new ClientServiceImpl(this.clientRepository);
         this.accountService = new AccountServiceImpl(this.accountRepository);
 
-        this.loginView = new LoginView();
-        this.loginController = new LoginController(loginView, authenticationService);
+
         this.accountView = new AccountView();
         this.accountController = new AccountController(this.accountView, this.accountService);
         this.clientView = new ClientView();
         this.clientController = new ClientController(this.clientView, this.clientService);
-        this.userView = new UserView();
-        this.adminController = new AdminController(this.userView, this.userService);
+        this.adminView = new AdminView();
+        this.adminController = new AdminController(this.adminView, this.userService);
+
+        this.loginView = new LoginView();
+        this.loginController = new LoginController(loginView, authenticationService, adminView, accountView, clientView);
     }
 
     public AuthenticationService getAuthenticationService() {
@@ -109,8 +110,8 @@ public class ComponentFactory {
         return adminController;
     }
 
-    public UserView getUserView() {
-        return userView;
+    public AdminView getUserView() {
+        return adminView;
     }
 
     public AccountService getAccountService() {
@@ -152,6 +153,4 @@ public class ComponentFactory {
     public LoginController getLoginController() {
         return loginController;
     }
-
-
 }

@@ -14,9 +14,9 @@ public interface ClientService {
 
     void update(Client oldClient, Client newClient);
 
-    Notification<Boolean> delete(Client client);
+    void delete(Client client);
 
-    Notification<Boolean> findById(Client client) throws EntityNotFoundException;
+    Notification<Boolean> findById(Long id) throws EntityNotFoundException;
 
     Client findByPNC(Client client) throws EntityNotFoundException;
 }

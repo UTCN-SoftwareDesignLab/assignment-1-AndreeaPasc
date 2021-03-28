@@ -1,5 +1,6 @@
 package service.user;
 
+import model.Account;
 import model.Client;
 import model.User;
 import model.validation.ClientValidator;
@@ -20,22 +21,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Notification<Boolean> findAll() {
-        UserValidator userValidator = null;
-        boolean valid = false;
         List<User> users = userRepository.findAll();
-        for(User user: users) {
-            userValidator = new UserValidator(user);
-            valid = userValidator.validate();
-        }
-        Notification<Boolean> userNotification = new Notification<>();
-        if(valid){
-            userNotification.setResult(!userRepository.findAll().isEmpty());
+        Notification<Boolean> accountNotification = new Notification<>();
+        if(!users.isEmpty()){
+            accountNotification.setResult(Boolean.TRUE);
         }else{
-            assert userValidator != null;
-            userValidator.getErrors().forEach(userNotification::addError);
-            userNotification.setResult(Boolean.FALSE);
+            accountNotification.setResult(Boolean.FALSE);
         }
-        return userNotification;
+        return accountNotification;
     }
 
     @Override
@@ -76,32 +69,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Notification<Boolean> delete(User user) {
-        UserValidator userValidator = new UserValidator(user);
-        boolean valid = userValidator.validate();
-        Notification<Boolean> userNotification = new Notification<>();
-        if(valid){
-            userNotification.setResult(userRepository.delete(user));
-        }else{
-            userValidator.getErrors().forEach(userNotification::addError);
-            userNotification.setResult(Boolean.FALSE);
-        }
-        return userNotification;
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 
     @Override
-    public Notification<Boolean> findById(User user) throws EntityNotFoundException {
-        UserValidator userValidator = new UserValidator(user);
-        boolean valid = userValidator.validate();
+    public Notification<Boolean> findById(Long id) throws EntityNotFoundException {
+        User user = userRepository.findById(id);
         Notification<Boolean> userNotification = new Notification<>();
         List<User> users = null;
-        if(valid){
-            users.add(userRepository.findById(user));
-            userNotification.setResult(!users.isEmpty());
+        users.add(user);
+        if(!users.isEmpty()){
+            userNotification.setResult(Boolean.TRUE);
         }else{
-            userValidator.getErrors().forEach(userNotification::addError);
             userNotification.setResult(Boolean.FALSE);
         }
+
         return userNotification;
     }
 }

@@ -16,7 +16,7 @@ public interface ClientRepository {
 
     boolean delete(Client client);
 
-    Client findById(Client client) throws EntityNotFoundException;
+    Client findById(Long id) throws EntityNotFoundException;
 
     Client findByPNC(Client client) throws EntityNotFoundException;
 }

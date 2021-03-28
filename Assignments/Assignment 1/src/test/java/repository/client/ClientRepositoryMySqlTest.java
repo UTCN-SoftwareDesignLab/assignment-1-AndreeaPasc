@@ -83,7 +83,7 @@ public class ClientRepositoryMySqlTest {
         List<Client> clients = clientRepository.findAll();
         Client client0 = clients.get(0);
         for (Client cl : clients) {
-            if (cl.getId().equals(clientRepository.findById(client0).getId())) {
+            if (cl.getId().equals(clientRepository.findById(client0.getId()).getId())) {
                 found = cl;
             }
         }

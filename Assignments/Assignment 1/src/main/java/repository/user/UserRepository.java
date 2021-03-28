@@ -20,5 +20,5 @@ public interface UserRepository {
 
     boolean delete(User user);
 
-    User findById(User user) throws EntityNotFoundException;
+    User findById(Long id) throws EntityNotFoundException;
 }

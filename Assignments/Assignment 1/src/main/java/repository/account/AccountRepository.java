@@ -16,5 +16,5 @@ public interface AccountRepository {
 
     boolean delete(Account account);
 
-    Account findById(Account account) throws EntityNotFoundException;
+    Account findById(Long id) throws EntityNotFoundException;
 }

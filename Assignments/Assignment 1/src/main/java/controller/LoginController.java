@@ -1,21 +1,33 @@
 package controller;
 
+import model.Client;
 import model.User;
 import model.validation.Notification;
 import service.user.AuthenticationService;
+import view.AccountView;
+import view.AdminView;
+import view.ClientView;
 import view.LoginView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static database.Constants.Roles.ADMINISTRATOR;
+
 public class LoginController {
     private final LoginView loginView;
+    private final AdminView adminView;
+    private final ClientView clientView;
+    private final AccountView accountView;
     private final AuthenticationService authenticationService;
 
-    public LoginController(LoginView loginView, AuthenticationService authenticationService) {
+    public LoginController(LoginView loginView, AuthenticationService authenticationService, AdminView adminView, AccountView accountView, ClientView clientView) {
         this.loginView = loginView;
         this.authenticationService = authenticationService;
+        this.adminView = adminView;
+        this.accountView = accountView;
+        this.clientView = clientView;
         loginView.setLoginButtonListener(new LoginButtonListener());
         loginView.setRegisterButtonListener(new RegisterButtonListener());
     }
@@ -33,6 +45,13 @@ public class LoginController {
                 JOptionPane.showMessageDialog(loginView.getContentPane(), loginNotification.getFormattedErrors());
             } else {
                 JOptionPane.showMessageDialog(loginView.getContentPane(), "Login successful!");
+                User currentUser = loginNotification.getResult();
+                if(currentUser.getRoles().get(0).equals(ADMINISTRATOR)){
+                    adminView.setVisible();
+                }else{
+                    clientView.setVisible();
+                    accountView.setVisible();
+                }
             }
         }
     }

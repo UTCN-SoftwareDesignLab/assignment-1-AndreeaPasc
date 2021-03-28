@@ -111,10 +111,10 @@ public class AccountRepositoryMySQL implements AccountRepository{
     }
 
     @Override
-    public Account findById(Account account) throws EntityNotFoundException {
+    public Account findById(Long id) throws EntityNotFoundException {
         try {
             Statement statement = connection.createStatement();
-            String fetchAccountSql = "Select * from account WHERE id = " + account.getId();
+            String fetchAccountSql = "Select * from account WHERE id = " + id;
             ResultSet accountResultSet = statement.executeQuery(fetchAccountSql);
             if (accountResultSet.next()) {
                 return new AccountBuilder()
@@ -126,11 +126,11 @@ public class AccountRepositoryMySQL implements AccountRepository{
                         .setType(accountResultSet.getString("type"))
                         .build();
             } else {
-                throw new EntityNotFoundException(account.getId(), Account.class.getSimpleName());
+                throw new EntityNotFoundException(id, Account.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
-            throw new EntityNotFoundException(account.getId(), Account.class.getSimpleName());
+            throw new EntityNotFoundException(id, Account.class.getSimpleName());
         }
     }
 }

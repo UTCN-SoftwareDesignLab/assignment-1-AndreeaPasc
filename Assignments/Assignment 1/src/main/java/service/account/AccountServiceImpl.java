@@ -17,19 +17,11 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Notification<Boolean> findAll() {
-        AccountValidator accountValidator = null;
-        boolean valid = false;
         List<Account> accounts = accountRepository.findAll();
-        for(Account account: accounts) {
-            accountValidator = new AccountValidator(account);
-            valid = accountValidator.validate(account.getMoneyAmount());
-        }
         Notification<Boolean> accountNotification = new Notification<>();
-        if(valid){
-            accountNotification.setResult(!accountRepository.findAll().isEmpty());
+        if(!accounts.isEmpty()){
+            accountNotification.setResult(Boolean.TRUE);
         }else{
-            assert accountValidator != null;
-            accountValidator.getErrors().forEach(accountNotification::addError);
             accountNotification.setResult(Boolean.FALSE);
         }
         return accountNotification;
@@ -68,39 +60,38 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Notification<Boolean> delete(Account account) {
-        AccountValidator accountValidator = new AccountValidator(account);
-        boolean valid = accountValidator.validate(account.getMoneyAmount());
-        Notification<Boolean> accountNotification = new Notification<>();
-        if(valid){
-            accountNotification.setResult(accountRepository.delete(account));
-        }else{
-            accountValidator.getErrors().forEach(accountNotification::addError);
-            accountNotification.setResult(Boolean.FALSE);
-        }
-        return accountNotification;
+    public void delete(Account account) {
+        accountRepository.delete(account);
     }
 
     @Override
-    public Notification<Boolean> findById(Account account) throws EntityNotFoundException {
-        AccountValidator accountValidator = new AccountValidator(account);
-        boolean valid = accountValidator.validate(account.getMoneyAmount());
+    public Notification<Boolean> findById(Long id) throws EntityNotFoundException {
+        Account account = accountRepository.findById(id);
         Notification<Boolean> accountNotification = new Notification<>();
         List<Account> accounts = null;
-        if(valid){
-            accounts.add(accountRepository.findById(account));
-            accountNotification.setResult(!accounts.isEmpty());
+        accounts.add(account);
+        if(!accounts.isEmpty()){
+            accountNotification.setResult(Boolean.TRUE);
         }else{
-            accountValidator.getErrors().forEach(accountNotification::addError);
             accountNotification.setResult(Boolean.FALSE);
         }
         return accountNotification;
     }
 
     @Override
-    public Notification<Account> transferMoney(Long money, Account account1, Account account2) {
+    public Notification<Boolean> transferMoney(Long money, Account account1, Account account2) {
+        Long oldMoneyAcc1 = account1.getMoneyAmount();
+        Long oldMoneyAcc2 = account2.getMoneyAmount();
+
         account1.setMoneyAmount(account1.getMoneyAmount() - money);
         account2.setMoneyAmount(account2.getMoneyAmount() + money);
-        return null;
+        accountRepository.save(account1);
+        accountRepository.save(account2);
+
+        Notification<Boolean> accountNotification = new Notification<>();
+        if((account1.getMoneyAmount() == oldMoneyAcc1 - money) && (account2.getMoneyAmount() == oldMoneyAcc2 + money))
+            accountNotification.setResult(Boolean.TRUE);
+        else accountNotification.setResult(Boolean.FALSE);
+        return accountNotification;
     }
 }

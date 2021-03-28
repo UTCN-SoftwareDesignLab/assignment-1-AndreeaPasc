@@ -75,10 +75,10 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
-    public User findById(User user) throws EntityNotFoundException {
+    public User findById(Long id) throws EntityNotFoundException {
         try{
             Statement statement = connection.createStatement();
-            String fetchUserSql = "SELECT * FROM user WHERE id = " + user.getId();
+            String fetchUserSql = "SELECT * FROM user WHERE id = " + id;
             ResultSet userResultSet = statement.executeQuery(fetchUserSql);
             if(userResultSet.next()){
                 return new UserBuilder()
@@ -87,11 +87,11 @@ public class UserRepositoryMySQL implements UserRepository {
                         .setPassword(userResultSet.getString("password"))
                         .build();
             }else {
-                throw new EntityNotFoundException(user.getId(), User.class.getSimpleName());
+                throw new EntityNotFoundException(id, User.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
-            throw new EntityNotFoundException(user.getId(), User.class.getSimpleName());
+            throw new EntityNotFoundException(id, User.class.getSimpleName());
         }
     }
 

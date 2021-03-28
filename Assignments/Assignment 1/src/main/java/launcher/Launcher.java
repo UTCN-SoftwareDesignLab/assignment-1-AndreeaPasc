@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class Launcher {
 
-    public static boolean BOOTSTRAP = true;
+    public static boolean BOOTSTRAP = false;
 
     public static void main(String[] args) {
         bootstrap();
 
-        ComponentFactory componentFactory = ComponentFactory.instance(true);
+        ComponentFactory componentFactory = ComponentFactory.instance(false);
         componentFactory.getLoginView().setVisible(true);
     }
 

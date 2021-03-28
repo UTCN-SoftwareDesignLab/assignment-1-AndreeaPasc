@@ -110,10 +110,10 @@ public class ClientRepositoryMySQL implements ClientRepository{
     }
 
     @Override
-    public Client findById(Client client) throws EntityNotFoundException {
+    public Client findById(Long id) throws EntityNotFoundException {
         try{
             Statement statement = connection.createStatement();
-            String fetchClientSql = "SELECT * FROM client_info WHERE id = " + client.getId();
+            String fetchClientSql = "SELECT * FROM client_info WHERE id = " + id;
             ResultSet clientResultSet = statement.executeQuery(fetchClientSql);
             if(clientResultSet.next()){
                 return new ClientBuilder()
@@ -125,11 +125,11 @@ public class ClientRepositoryMySQL implements ClientRepository{
                         .setPersonalNumericalCode(clientResultSet.getLong("PNC"))
                         .build();
             }else {
-                throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
+                throw new EntityNotFoundException(id, Client.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
-            throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
+            throw new EntityNotFoundException(id, Client.class.getSimpleName());
         }
     }
 
