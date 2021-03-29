@@ -16,8 +16,8 @@ import java.text.ParseException;
 import java.util.List;
 
 public class AccountController {
-    private AccountView accountView;
-    private AccountService accountService;
+    private final AccountView accountView;
+    private final AccountService accountService;
 
     public AccountController(AccountView accountView, AccountService accountService) {
         this.accountView = accountView;

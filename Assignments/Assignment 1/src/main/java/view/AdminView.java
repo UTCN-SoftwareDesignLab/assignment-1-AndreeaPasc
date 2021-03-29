@@ -12,6 +12,7 @@ public class AdminView extends JFrame {
     JTextField tfUserPassword;
     //JTextField tfUserRoles;
 
+    JButton btnActivityLog;
     JButton btnSaveUser;
     JButton btnDeleteUser;
     JButton btnFindByIdUser;
@@ -41,6 +42,7 @@ public class AdminView extends JFrame {
         add(btnRemoveAllUser);
         add(btnUpdateUser);
         add(btnFindByUsernameAndPasswordUser);
+        add(btnActivityLog);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -53,6 +55,7 @@ public class AdminView extends JFrame {
         btnFindByIdUser = new JButton("Find user by Id");
         btnRemoveAllUser = new JButton("Delete all users");
         btnFindByUsernameAndPasswordUser = new JButton("Find by username and password");
+        btnActivityLog = new JButton("Activity Logs");
         
         tfUserId = new JTextField();
         tfUserUsername = new JTextField();
@@ -102,6 +105,9 @@ public class AdminView extends JFrame {
         btnFindByUsernameAndPasswordUser.addActionListener(findByUsernameAndPasswordButtonListener);
     }
 
+    public void setActivityLogButtonListener(ActionListener activityLogButtonListener){
+        btnActivityLog.addActionListener(activityLogButtonListener);
+    }
     public void setVisible() {
         this.setVisible(true);
     }

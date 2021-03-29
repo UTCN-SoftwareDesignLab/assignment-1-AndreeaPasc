@@ -136,7 +136,17 @@ public class RightsRolesRepositoryMySQL implements RightsRolesRepository {
             insertStatement.setLong(2, rightId);
             insertStatement.executeUpdate();
         } catch (SQLException e) {
+        }
+    }
 
+    @Override
+    public void removeAll(){
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "DELETE from " +  ROLE  + " WHERE id >= 0";
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

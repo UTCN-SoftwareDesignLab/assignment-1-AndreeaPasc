@@ -50,6 +50,21 @@ public class SQLTableCreationFactory {
                         "  UNIQUE INDEX id_UNIQUE (id ASC)," +
                         "  UNIQUE INDEX username_UNIQUE (username ASC));";
 
+            case ACTIVITY_LOG:
+                return  "CREATE TABLE IF NOT EXISTS activity (" +
+                        " id INT NOT NULL AUTO_INCREMENT," +
+                        " user_id int(11) NOT NULL," +
+                        " activity VARCHAR(200) NOT NULL," +
+                        " date datetime DEFAULT NULL," +
+                        " PRIMARY KEY (id)," +
+                        " UNIQUE INDEX id_UNIQUE (id)," +
+                        " INDEX user_id_idx (user_id ASC)," +
+                        " CONSTRAINT user_id" +
+                        "    FOREIGN KEY (user_id)" +
+                        "    REFERENCES user (id)" +
+                        "    ON DELETE CASCADE" +
+                        "    ON UPDATE CASCADE);";
+
             case ROLE:
                 return "  CREATE TABLE IF NOT EXISTS role (" +
                         "  id INT NOT NULL AUTO_INCREMENT," +

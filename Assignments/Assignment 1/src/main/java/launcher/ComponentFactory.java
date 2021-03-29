@@ -7,6 +7,8 @@ import controller.LoginController;
 import database.DBConnectionFactory;
 import repository.account.AccountRepository;
 import repository.account.AccountRepositoryMySQL;
+import repository.activity.ActivityLogRepository;
+import repository.activity.ActivityLogRepositoryMySql;
 import repository.client.ClientRepository;
 import repository.client.ClientRepositoryMySQL;
 import repository.security.RightsRolesRepository;
@@ -15,6 +17,8 @@ import repository.user.UserRepository;
 import repository.user.UserRepositoryMySQL;
 import service.account.AccountService;
 import service.account.AccountServiceImpl;
+import service.activity.ActivityLogService;
+import service.activity.ActivityLogServiceImpl;
 import service.client.ClientService;
 import service.client.ClientServiceImpl;
 import service.user.AuthenticationService;
@@ -46,7 +50,9 @@ public class ComponentFactory {
     private final AccountService accountService;
     private final ClientService clientService;
     private final UserService userService;
+    private final ActivityLogService activityLogService;
 
+    private final ActivityLogRepository activityLogRepository;
     private final UserRepository userRepository;
     private final RightsRolesRepository rightsRolesRepository;
     private final ClientRepository clientRepository;
@@ -68,7 +74,9 @@ public class ComponentFactory {
         this.userRepository = new UserRepositoryMySQL(connection, rightsRolesRepository);
         this.clientRepository = new ClientRepositoryMySQL(connection);
         this.accountRepository = new AccountRepositoryMySQL(connection);
+        this.activityLogRepository = new ActivityLogRepositoryMySql(connection, userRepository);
 
+        this.activityLogService = new ActivityLogServiceImpl(activityLogRepository);
         this.authenticationService = new AuthenticationServiceMySQL(this.userRepository, this.rightsRolesRepository);
         this.userService = new UserServiceImpl(this.userRepository);
         this.clientService = new ClientServiceImpl(this.clientRepository);
@@ -80,7 +88,7 @@ public class ComponentFactory {
         this.clientController = new ClientController(clientView, this.clientService);
 
         AdminView adminView = new AdminView();
-        this.adminController = new AdminController(adminView, this.userService);
+        this.adminController = new AdminController(adminView, this.userService, this.activityLogService);
 
         this.loginView = new LoginView();
         this.loginController = new LoginController(loginView, authenticationService, adminView, accountView, clientView);
@@ -157,6 +165,10 @@ public class ComponentFactory {
 
     public AccountRepository getAccountRepository() {
         return accountRepository;
+    }
+
+    public ActivityLogRepository getActivityLogRepository(){
+        return  activityLogRepository;
     }
 
     public LoginController getLoginController() {

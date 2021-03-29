@@ -10,7 +10,9 @@ service/user/UserServiceImplTest.java
  service.user.UserServiceImplTest
 service/client/ClientServiceImplTest.java
  service.client.ClientServiceImplTest
-repository/user/UserRepositoryMySqlTest.java
- repository.user.UserRepositoryMySqlTest
 service/account/AccountServiceImplTest.java
  service.account.AccountServiceImplTest
+repository/user/UserRepositoryMySqlTest.java
+ repository.user.UserRepositoryMySqlTest
+repository/activity/ActivityLogRepositoryMySqlTest.java
+ repository.activity.ActivityLogRepositoryMySqlTest

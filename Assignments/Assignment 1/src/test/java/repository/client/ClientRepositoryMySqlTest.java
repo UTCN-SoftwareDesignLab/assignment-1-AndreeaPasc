@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import repository.EntityNotFoundException;
-import repository.client.ClientRepository;
 
 import java.util.List;
 

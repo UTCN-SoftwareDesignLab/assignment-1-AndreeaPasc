@@ -1,9 +1,12 @@
 package controller;
 
+import model.ActivityLog;
 import model.User;
 import model.builder.UserBuilder;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
+import service.account.AccountService;
+import service.activity.ActivityLogService;
 import service.user.UserService;
 import view.AdminView;
 
@@ -14,12 +17,15 @@ import java.util.List;
 
 public class AdminController {
 
-    private AdminView adminView;
-    private UserService userService;
+    private final AdminView adminView;
+    private final UserService userService;
+    private final ActivityLogService activityLogService;
 
-    public AdminController(AdminView adminView, UserService userService) {
+    public AdminController(AdminView adminView, UserService userService, ActivityLogService activityLogService) {
         this.adminView = adminView;
         this.userService = userService;
+        this.activityLogService = activityLogService;
+
 
         adminView.setFindAllUserButtonListener(new FindAllUserButtonListener());
         adminView.setSaveUserButtonListener(new SaveUserButtonListener());
@@ -27,6 +33,30 @@ public class AdminController {
         adminView.setUpdateUserButtonListener(new UpdateUserButtonListener());
         adminView.setRemoveAllUserButtonListener(new RemoveAllUserButtonListener());
         adminView.setFindByUsernameAndPasswordButtonListener(new FindByUsernameAndPasswordButtonListener());
+        adminView.setActivityLogButtonListener(new ActivityLogButtonListener());
+    }
+
+    private class ActivityLogButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Notification<Boolean> activityLogNotification = null;
+            try {
+                activityLogNotification = activityLogService.findAll();
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
+            }
+            try {
+                activityLogNotification = activityLogService.findAll();
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
+            }
+            if(activityLogNotification.hasErrors()){
+                JOptionPane.showMessageDialog(adminView.getContentPane(), activityLogNotification.getFormattedErrors());
+            } else {
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Found all activities successfully!");
+            }
+        }
     }
 
     private class FindAllUserButtonListener implements ActionListener {

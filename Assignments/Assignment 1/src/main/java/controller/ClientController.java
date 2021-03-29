@@ -1,6 +1,5 @@
 package controller;
 
-import model.Account;
 import model.Client;
 import model.builder.ClientBuilder;
 import model.validation.Notification;
@@ -14,8 +13,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ClientController {
-    private ClientView clientView;
-    private ClientService clientService;
+    private final ClientView clientView;
+    private final ClientService clientService;
 
     public ClientController(ClientView clientView, ClientService clientService) {
         this.clientView = clientView;
