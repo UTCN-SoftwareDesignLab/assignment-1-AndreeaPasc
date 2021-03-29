@@ -58,7 +58,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(123L)
-                .setMoneyAmount(45L)
+                .setMoneyAmount(45.0)
                 .setType("Savings")
                 .build();
 
@@ -84,7 +84,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(123L)
-                .setMoneyAmount(50L)
+                .setMoneyAmount(50.0)
                 .setType("Savings")
                 .build();
 
@@ -108,7 +108,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(123L)
-                .setMoneyAmount(50L)
+                .setMoneyAmount(50.0)
                 .setType("Savings")
                 .build();
 
@@ -116,7 +116,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(1234L)
-                .setMoneyAmount(500L)
+                .setMoneyAmount(500.0)
                 .setType("Debit")
                 .build();
         accountRepository.save(account);
@@ -150,7 +150,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(123L)
-                .setMoneyAmount(50L)
+                .setMoneyAmount(50.0)
                 .setType("Savings")
                 .build();
         accountRepository.save(account);
@@ -175,7 +175,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(123L)
-                .setMoneyAmount(50L)
+                .setMoneyAmount(50.0)
                 .setType("Savings")
                 .build();
 
@@ -183,7 +183,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(123L)
-                .setMoneyAmount(50L)
+                .setMoneyAmount(50.0)
                 .setType("Debit")
                 .build();
         accountRepository.save(account);
@@ -208,7 +208,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(123L)
-                .setMoneyAmount(50L)
+                .setMoneyAmount(50.0)
                 .setType("Savings")
                 .build();
 
@@ -216,7 +216,7 @@ public class AccountRepositoryMySqlTest {
                 .setClientID(clients.get(0).getId())
                 .setCreationDate(new Date())
                 .setIdentificationNumber(1234L)
-                .setMoneyAmount(500L)
+                .setMoneyAmount(500.0)
                 .setType("Debit")
                 .build();
         accountRepository.save(account);

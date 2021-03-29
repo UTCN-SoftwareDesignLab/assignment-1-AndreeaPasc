@@ -1,7 +1,9 @@
 package controller;
 
 import model.Account;
+import model.Bill;
 import model.builder.AccountBuilder;
+import model.builder.BillBuilder;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
 import service.account.AccountService;
@@ -28,6 +30,7 @@ public class AccountController {
         accountView.setFindAllAccountButtonListener(new FindAllAccountButtonListener());
         accountView.setRemoveAllAccountButtonListener(new RemoveAllAccountButtonListener());
         accountView.setTransferMoneyButtonListener(new TransferMoneyButtonListener());
+        accountView.setPayBillButtonListener(new PayBillButtonListener());
     }
 
     public class SetSaveAccountButtonListener implements ActionListener {
@@ -158,12 +161,33 @@ public class AccountController {
                 parseException.printStackTrace();
             }
 
-            Long money = accountView.getTransferMoney();
+            Double money = accountView.getTransferMoney();
             Notification<Boolean> accountNotification = accountService.transferMoney(money, account, account2);
             if(accountNotification.hasErrors()){
                 JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
             } else {
                 JOptionPane.showMessageDialog(accountView.getContentPane(), "Transferred money successfully!");
+            }
+        }
+    }
+
+    public class PayBillButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Account account = null;
+            try {
+                account = createAccount();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            }
+
+            Double billAmount = accountView.getBillAMount();
+            Notification<Boolean> accountNotification = accountService.payBill(billAmount, account);
+            if(accountNotification.hasErrors()){
+                JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
+            } else {
+                JOptionPane.showMessageDialog(accountView.getContentPane(), "Paid bill successfully!");
             }
         }
     }

@@ -24,12 +24,12 @@ public class AccountValidator {
             errors.add("Id number should have length 6");
     }
 
-    private void validateMoneyAmount(Long money){
+    private void validateMoneyAmount(Double money){
         if(this.account.getMoneyAmount() - money < 0)
             errors.add("Not enough money amount in account for transaction");
     }
 
-    public boolean validate(Long money){
+    public boolean validate(Double money){
         validateIdNumber(account);
         validateMoneyAmount(money);
         return errors.isEmpty();

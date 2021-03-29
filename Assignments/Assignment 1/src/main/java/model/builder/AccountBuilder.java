@@ -1,7 +1,6 @@
 package model.builder;
 
 import model.Account;
-import model.User;
 
 import java.util.Date;
 
@@ -33,7 +32,7 @@ public class AccountBuilder {
         return this;
     }
 
-    public AccountBuilder setMoneyAmount(Long moneyAmount){
+    public AccountBuilder setMoneyAmount(double moneyAmount){
         account.setMoneyAmount(moneyAmount);
         return this;
     }

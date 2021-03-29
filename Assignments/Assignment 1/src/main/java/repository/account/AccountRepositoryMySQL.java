@@ -32,7 +32,7 @@ public class AccountRepositoryMySQL implements AccountRepository{
                         .setClientID(accountResultSet.getLong("client_id"))
                         .setIdentificationNumber(accountResultSet.getLong("idNumber"))
                         .setCreationDate(accountResultSet.getDate("creationDate"))
-                        .setMoneyAmount(accountResultSet.getLong("moneyAmount"))
+                        .setMoneyAmount(accountResultSet.getDouble("moneyAmount"))
                         .setType(accountResultSet.getString("type"))
                         .build();
 
@@ -52,7 +52,7 @@ public class AccountRepositoryMySQL implements AccountRepository{
             insertUserStatement.setLong(1, account.getClientId());
             insertUserStatement.setLong(2, account.getIdentificationNumber());
             insertUserStatement.setString(3, account.getType());
-            insertUserStatement.setLong(4, account.getMoneyAmount());
+            insertUserStatement.setDouble(4, account.getMoneyAmount());
             insertUserStatement.setDate(5, new java.sql.Date(account.getCreationDate().getTime()));
             insertUserStatement.executeUpdate();
 
@@ -85,7 +85,7 @@ public class AccountRepositoryMySQL implements AccountRepository{
             PreparedStatement preparedStatement = connection
                     .prepareStatement("UPDATE " + ACCOUNT + " SET client_id = ?, idNumber = ?, type = ?, moneyAmount = ?, creationDate = ? WHERE id = " + oldAccount.getId());
 
-            preparedStatement.setLong(4, newAccount.getMoneyAmount());
+            preparedStatement.setDouble(4, newAccount.getMoneyAmount());
             preparedStatement.setLong(1, newAccount.getClientId());
             preparedStatement.setLong(2, newAccount.getIdentificationNumber());
             preparedStatement.setString(3, newAccount.getType());
@@ -122,7 +122,7 @@ public class AccountRepositoryMySQL implements AccountRepository{
                         .setClientID(accountResultSet.getLong("client_id"))
                         .setIdentificationNumber(accountResultSet.getLong("idNumber"))
                         .setCreationDate(accountResultSet.getDate("creationDate"))
-                        .setMoneyAmount(accountResultSet.getLong("moneyAmount"))
+                        .setMoneyAmount(accountResultSet.getDouble("moneyAmount"))
                         .setType(accountResultSet.getString("type"))
                         .build();
             } else {

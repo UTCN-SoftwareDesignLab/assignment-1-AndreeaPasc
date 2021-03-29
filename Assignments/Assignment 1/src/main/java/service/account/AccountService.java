@@ -1,6 +1,7 @@
 package service.account;
 
 import model.Account;
+import model.Bill;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
 
@@ -18,6 +19,7 @@ public interface AccountService {
 
     Notification<Boolean> findById(Long id) throws EntityNotFoundException;
 
-    Notification<Boolean> transferMoney(Long money, Account account1, Account account2);
+    Notification<Boolean> transferMoney(Double money, Account account1, Account account2);
 
+    Notification<Boolean> payBill(Double billAmount, Account account);
 }

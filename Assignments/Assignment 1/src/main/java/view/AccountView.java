@@ -17,6 +17,8 @@ public class AccountView extends JFrame {
     private JTextField tfAccountMoneyAmount;
     private JTextField tfAccountCreationDate;
     private JTextField tfAccountTransferMoney;
+    private JTextField tfBillAmount;
+    private JTextField tfBillType;
 
     private JButton btnFindByIdAccount;
     private JButton btnDeleteAccount;
@@ -25,6 +27,7 @@ public class AccountView extends JFrame {
     private JButton btnSaveAccount;
     private JButton btnFindAllAccount;
     private JButton btnTransferMoney;
+    private JButton btnPayBIll;
 
     public AccountView() throws HeadlessException{
         setSize(1000, 1000);
@@ -46,6 +49,10 @@ public class AccountView extends JFrame {
         add(tfAccountCreationDate);
         add(new JLabel("Transfer money between 2 accounts"));
         add(tfAccountTransferMoney);
+        add(new JLabel("Bill amount"));
+        add(tfBillAmount);
+        add(new JLabel("Bill type"));
+        add(tfBillType);
 
         add(btnFindByIdAccount);
         add(btnDeleteAccount);
@@ -54,6 +61,7 @@ public class AccountView extends JFrame {
         add(btnSaveAccount);
         add(btnFindAllAccount);
         add(btnTransferMoney);
+        add(btnPayBIll);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -66,6 +74,7 @@ public class AccountView extends JFrame {
         btnFindByIdAccount = new JButton("Find account by Id");
         btnRemoveAllAccount = new JButton("Delete all accounts");
         btnTransferMoney = new JButton("Transfer money between 2 accounts");
+        btnPayBIll = new JButton("Pay utility bills");
 
         tfAccountClientId = new JTextField();
         tfAccountId = new JTextField();
@@ -74,14 +83,24 @@ public class AccountView extends JFrame {
         tfAccountIdCardNumber = new JTextField();
         tfAccountMoneyAmount = new JTextField();
         tfAccountTransferMoney = new JTextField();
+        tfBillAmount = new JTextField();
+        tfBillType = new JTextField();
     }
 
     public Long getId(){
         return Long.parseLong(tfAccountId.getText());
     }
 
-    public Long getTransferMoney(){
-        return Long.parseLong(tfAccountTransferMoney.getText());
+    public String getBillType(){
+        return tfBillType.getText();
+    }
+
+    public Double getBillAMount(){
+        return Double.parseDouble(tfBillAmount.getText());
+    }
+
+    public Double getTransferMoney(){
+        return Double.parseDouble(tfAccountTransferMoney.getText());
     }
 
     public Long getClientId(){
@@ -129,6 +148,9 @@ public class AccountView extends JFrame {
         btnTransferMoney.addActionListener(transferMoneyButtonListener);
     }
 
+    public void setPayBillButtonListener(ActionListener payBillButtonListener){
+        btnPayBIll.addActionListener(payBillButtonListener);
+    }
     public void setVisible() {
         this.setVisible(true);
     }

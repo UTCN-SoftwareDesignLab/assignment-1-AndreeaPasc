@@ -9,7 +9,7 @@ public class Account {
     private Long clientId;
     private Long identificationNumber;
     private String type;
-    private Long moneyAmount;
+    private Double moneyAmount;
     private Date creationDate;
 
     public void setId(Long id) {
@@ -44,11 +44,11 @@ public class Account {
         this.type = type;
     }
 
-    public Long getMoneyAmount() {
+    public Double getMoneyAmount() {
         return moneyAmount;
     }
 
-    public void setMoneyAmount(Long moneyAmount) {
+    public void setMoneyAmount(Double moneyAmount) {
         this.moneyAmount = moneyAmount;
     }
 
