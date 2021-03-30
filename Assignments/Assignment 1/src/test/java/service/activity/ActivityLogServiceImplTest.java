@@ -43,7 +43,7 @@ public class ActivityLogServiceImplTest {
 
     @Test
     public void findAll() throws EntityNotFoundException {
-        Assert.assertFalse(activityLogService.findAll().getResult());
+        Assert.assertNotNull(activityLogService.findAll());
     }
 
     @Test

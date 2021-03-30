@@ -54,8 +54,11 @@ model/builder/ActivityLogBuilder.java
  model.builder.ActivityLogBuilder
 repository/security/RightsRolesRepository.java
  repository.security.RightsRolesRepository
-service/activity/ActivityLogService.java
- service.activity.ActivityLogService
+controller/LoginController.java
+ controller.LoginController
+ controller.LoginController$1
+ controller.LoginController$LoginButtonListener
+ controller.LoginController$RegisterButtonListener
 repository/activity/ActivityLogRepositoryMySql.java
  repository.activity.ActivityLogRepositoryMySql
 repository/client/ClientRepository.java
@@ -66,8 +69,8 @@ model/builder/AccountBuilder.java
  model.builder.AccountBuilder
 model/validation/UserValidator.java
  model.validation.UserValidator
-service/activity/ActivityLogServiceImpl.java
- service.activity.ActivityLogServiceImpl
+view/AdminView.java
+ view.AdminView
 repository/user/UserRepositoryMySQL.java
  repository.user.UserRepositoryMySQL
 model/builder/UserBuilder.java
@@ -102,11 +105,6 @@ view/LoginView.java
  view.LoginView
 launcher/Launcher.java
  launcher.Launcher
-controller/LoginController.java
- controller.LoginController
- controller.LoginController$1
- controller.LoginController$LoginButtonListener
- controller.LoginController$RegisterButtonListener
 controller/ClientController.java
  controller.ClientController
  controller.ClientController$1
@@ -126,8 +124,8 @@ controller/AccountController.java
  controller.AccountController$SetSaveAccountButtonListener
  controller.AccountController$TransferMoneyButtonListener
  controller.AccountController$UpdateAccountButtonListener
-view/AdminView.java
- view.AdminView
+service/activity/ActivityLogService.java
+ service.activity.ActivityLogService
 controller/AdminController.java
  controller.AdminController
  controller.AdminController$1
@@ -138,5 +136,7 @@ controller/AdminController.java
  controller.AdminController$RemoveUserButtonListener
  controller.AdminController$SaveUserButtonListener
  controller.AdminController$UpdateUserButtonListener
+service/activity/ActivityLogServiceImpl.java
+ service.activity.ActivityLogServiceImpl
 launcher/ComponentFactory.java
  launcher.ComponentFactory

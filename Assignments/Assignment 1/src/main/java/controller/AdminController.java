@@ -8,12 +8,14 @@ import model.validation.Notification;
 import repository.EntityNotFoundException;
 import service.activity.ActivityLogService;
 import service.user.UserService;
+import sun.swing.BakedArrayList;
 import view.AdminView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +52,7 @@ public class AdminController {
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
-            List<ActivityLog> activitiesOnDate = null;
+
 
             Date startDate = null;
             Date endDate = null;
@@ -61,15 +63,20 @@ public class AdminController {
                 parseException.printStackTrace();
             }
 
+            assert activities != null;
+            ArrayList<ActivityLog> activitiesOnDate = new ArrayList<>();
             for(ActivityLog ac : activities){
-                if(activityLogService.checkDateRange(startDate, endDate, ac))
+                if(activityLogService.checkDateRange(startDate, endDate, ac)) {
                     activitiesOnDate.add(ac);
+
+                }
             }
 
             if(activitiesOnDate.isEmpty()){
                 JOptionPane.showMessageDialog(adminView.getContentPane(), "Could not find activities!");
             } else {
                 JOptionPane.showMessageDialog(adminView.getContentPane(), "Found all activities successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), activityLogService.showActivityLog(activitiesOnDate));
             }
         }
     }

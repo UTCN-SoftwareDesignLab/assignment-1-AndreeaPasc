@@ -15,4 +15,6 @@ public interface ActivityLogService {
     List<ActivityLog> findAll() throws EntityNotFoundException;
 
     boolean checkDateRange(Date startDate, Date stopDate, ActivityLog activityLog);
+
+    List<String> showActivityLog(List<ActivityLog> activityLogs);
 }

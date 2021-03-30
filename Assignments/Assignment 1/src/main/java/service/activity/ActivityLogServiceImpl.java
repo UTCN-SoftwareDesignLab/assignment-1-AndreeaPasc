@@ -5,6 +5,7 @@ import model.validation.Notification;
 import repository.EntityNotFoundException;
 import repository.activity.ActivityLogRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,5 +35,14 @@ public class ActivityLogServiceImpl implements ActivityLogService{
     @Override
     public boolean checkDateRange(Date startDate, Date stopDate, ActivityLog activityLog) {
         return activityLog.getDate().after(startDate) && activityLog.getDate().before(stopDate);
+    }
+
+    @Override
+    public List<String> showActivityLog(List<ActivityLog> activityLogs) {
+        ArrayList<String> strings = new ArrayList<>();
+        for(ActivityLog activityLog: activityLogs){
+            strings.add(activityLog.getId().toString() + " " + activityLog.getUser().getUsername() + " "+ activityLog.getActivity() + " " + activityLog.getDate().toString());
+        }
+        return strings;
     }
 }

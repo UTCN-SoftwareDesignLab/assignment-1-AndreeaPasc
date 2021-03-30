@@ -40,6 +40,23 @@ public class ActivityLogRepositoryMySqlTest {
 
     @Test
     public void findAll() throws EntityNotFoundException {
+        Role role = new Role(1L, EMPLOYEE, null);
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(role);
+        User user = new UserBuilder()
+                .setUsername("user2@test.com")
+                .setPassword("pass2_User2")
+                .setRoles(roles)
+                .build();
+        userRepository.save(user);
+
+        ActivityLog activityLog = new ActivityLogBuilder()
+                .setActivity("delete")
+                .setUser(user)
+                .setDate(new Date())
+                .build();
+        Assert.assertTrue(activityLogRepository.save(activityLog));
+
         List<ActivityLog> activities = activityLogRepository.findAll();
         Assert.assertNotNull(activities);
     }
