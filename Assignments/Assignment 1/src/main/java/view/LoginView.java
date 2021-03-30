@@ -10,6 +10,7 @@ public class LoginView extends JFrame {
 
     private JTextField tfUsername;
     private JTextField tfPassword;
+    private JTextField tfAdminOrUser;
     private JButton btnLogin;
     private JButton btnRegister;
 
@@ -18,16 +19,22 @@ public class LoginView extends JFrame {
         setLocationRelativeTo(null);
         initializeFields();
         setLayout(new BoxLayout(getContentPane(), Y_AXIS));
+        add(new JLabel("Username"));
         add(tfUsername);
+        add(new JLabel("Password"));
         add(tfPassword);
+        add(new JLabel("For registration only, choose Admin or Employee (administrator/employee)"));
+        add(tfAdminOrUser);
         add(btnLogin);
         add(btnRegister);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private void initializeFields() {
+
         tfUsername = new JTextField();
         tfPassword = new JTextField();
+        tfAdminOrUser = new JTextField();
         btnLogin = new JButton("Login");
         btnRegister = new JButton("Register");
     }
@@ -39,6 +46,8 @@ public class LoginView extends JFrame {
     public String getPassword() {
         return tfPassword.getText();
     }
+
+    public String getAdminOrUser(){ return tfAdminOrUser.getText(); }
 
     public void setLoginButtonListener(ActionListener loginButtonListener) {
         btnLogin.addActionListener(loginButtonListener);

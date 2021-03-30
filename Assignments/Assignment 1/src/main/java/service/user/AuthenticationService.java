@@ -1,5 +1,6 @@
 package service.user;
 
+import model.Role;
 import model.User;
 import model.validation.Notification;
 
@@ -8,7 +9,7 @@ import model.validation.Notification;
  */
 public interface AuthenticationService {
 
-    Notification<Boolean> register(String username, String password);
+    Notification<Boolean> register(String username, String password, Role role);
 
     Notification<User> login(String username, String password);
 

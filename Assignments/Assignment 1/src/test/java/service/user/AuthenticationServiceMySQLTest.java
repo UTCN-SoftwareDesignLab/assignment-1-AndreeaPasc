@@ -1,12 +1,17 @@
 package service.user;
 
 import launcher.ComponentFactory;
+import model.Role;
 import model.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import repository.user.UserRepository;
+
+import java.util.ArrayList;
+
+import static database.Constants.Roles.EMPLOYEE;
 
 /**
  * Created by Alex on 11/03/2017.
@@ -33,14 +38,16 @@ public class AuthenticationServiceMySQLTest {
 
     @Test
     public void register() {
+        Role role = new Role(1L, EMPLOYEE, null);
         Assert.assertTrue(
-                authenticationService.register(TEST_USERNAME, TEST_PASSWORD).getResult()
+                authenticationService.register(TEST_USERNAME, TEST_PASSWORD, role).getResult()
         );
     }
 
     @Test
     public void login() throws Exception {
-        authenticationService.register(TEST_USERNAME, TEST_PASSWORD);
+        Role role = new Role(1L, EMPLOYEE, null);
+        authenticationService.register(TEST_USERNAME, TEST_PASSWORD, role);
         User user = authenticationService.login(TEST_USERNAME, TEST_PASSWORD).getResult();
         Assert.assertNotNull(user);
     }

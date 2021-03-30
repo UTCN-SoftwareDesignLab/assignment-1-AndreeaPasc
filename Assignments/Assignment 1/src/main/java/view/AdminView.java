@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static javax.swing.BoxLayout.Y_AXIS;
 
@@ -10,6 +13,8 @@ public class AdminView extends JFrame {
     JTextField tfUserId;
     JTextField tfUserUsername;
     JTextField tfUserPassword;
+    JTextField tfStartDate;
+    JTextField tfEndDate;
     //JTextField tfUserRoles;
 
     JButton btnActivityLog;
@@ -33,6 +38,10 @@ public class AdminView extends JFrame {
         add(tfUserUsername);
         add(new JLabel("User password"));
         add(tfUserPassword);
+        add(new JLabel("Start date for activity logs"));
+        add(tfStartDate);
+        add(new JLabel("End date for activity logs"));
+        add(tfEndDate);
         //add(tfUserRoles);
 
         add(btnSaveUser);
@@ -60,6 +69,8 @@ public class AdminView extends JFrame {
         tfUserId = new JTextField();
         tfUserUsername = new JTextField();
         tfUserPassword = new JTextField();
+        tfStartDate = new JTextField();
+        tfEndDate = new JTextField();
         //tfUserRoles = new JTextField();
     }
 
@@ -68,6 +79,14 @@ public class AdminView extends JFrame {
         return Long.parseLong(tfUserId.getText());
     }
      */
+
+    public Date getStartDate() throws ParseException {
+        return new SimpleDateFormat("dd/MM/yyyy").parse(tfStartDate.getText());
+    }
+
+    public Date getEndDate() throws ParseException {
+        return new SimpleDateFormat("dd/MM/yyyy").parse(tfEndDate.getText());
+    }
 
     public String getUsername(){
         return tfUserUsername.getText();

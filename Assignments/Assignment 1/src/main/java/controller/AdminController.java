@@ -1,11 +1,11 @@
 package controller;
 
 import model.ActivityLog;
+import model.Role;
 import model.User;
 import model.builder.UserBuilder;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
-import service.account.AccountService;
 import service.activity.ActivityLogService;
 import service.user.UserService;
 import view.AdminView;
@@ -13,7 +13,12 @@ import view.AdminView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import static database.Constants.Roles.EMPLOYEE;
 
 public class AdminController {
 
@@ -40,11 +45,13 @@ public class AdminController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Notification<Boolean> activityLogNotification = null;
+            List<ActivityLog> activities = null;
             try {
                 activityLogNotification = activityLogService.findAll();
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
+
             try {
                 activityLogNotification = activityLogService.findAll();
             } catch (EntityNotFoundException entityNotFoundException) {
@@ -79,7 +86,7 @@ public class AdminController {
             if(userNotification.hasErrors()){
                 JOptionPane.showMessageDialog(adminView.getContentPane(), userNotification.getFormattedErrors());
             } else {
-                JOptionPane.showMessageDialog(adminView.getContentPane(), "Saved client successfully!");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Saved user successfully!");
             }
         }
     }
@@ -95,7 +102,7 @@ public class AdminController {
             }
 
             if(user == null){
-                JOptionPane.showMessageDialog(adminView.getContentPane(), "Could find the user to delete");
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Could not find the user to delete");
             } else {
                 userService.delete(user);
                 JOptionPane.showMessageDialog(adminView.getContentPane(), "Removed user successfully!");
@@ -151,10 +158,11 @@ public class AdminController {
     }
 
     private User createUser(){
+        Role role = new Role(2L, EMPLOYEE, null);
         return new UserBuilder()
                 .setUsername(adminView.getUsername())
                 .setPassword(adminView.getPassword())
-                //.setRoles(adminView.getRoles())
+                .setRoles(Collections.singletonList(role))
                 .build();
     }
 }

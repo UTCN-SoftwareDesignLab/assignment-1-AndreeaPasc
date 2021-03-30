@@ -1,6 +1,7 @@
 package controller;
 
 import model.Client;
+import model.Role;
 import model.User;
 import model.validation.Notification;
 import service.user.AuthenticationService;
@@ -12,8 +13,10 @@ import view.LoginView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import static database.Constants.Roles.ADMINISTRATOR;
+import static database.Constants.Roles.EMPLOYEE;
 
 public class LoginController {
     private final LoginView loginView;
@@ -46,9 +49,9 @@ public class LoginController {
             } else {
                 JOptionPane.showMessageDialog(loginView.getContentPane(), "Login successful!");
                 User currentUser = loginNotification.getResult();
-                if(currentUser.getRoles().get(0).equals(ADMINISTRATOR)){
+                if(currentUser.getRoles().get(0).getRole().equals("administrator")){
                     adminView.setVisible();
-                }else{
+                }else if(currentUser.getRoles().get(0).getRole().equals("employee")){
                     accountView.setVisible();
                     clientView.setVisible();
                 }
@@ -62,8 +65,14 @@ public class LoginController {
         public void actionPerformed(ActionEvent e) {
             String username = loginView.getUsername();
             String password = loginView.getPassword();
-
-            Notification<Boolean> registerNotification = authenticationService.register(username, password);
+            String sRole = loginView.getAdminOrUser();
+            Role role = null;
+            if (sRole.equals("administrator")){
+                role = new Role(1L, ADMINISTRATOR, null);
+            }else if(sRole.equals("employee")){
+                role = new Role(2L, EMPLOYEE, null);
+            }
+            Notification<Boolean> registerNotification = authenticationService.register(username, password, role);
 
             if (registerNotification.hasErrors()) {
                 JOptionPane.showMessageDialog(loginView.getContentPane(), registerNotification.getFormattedErrors());

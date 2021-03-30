@@ -97,24 +97,24 @@ public class UserRepositoryMySQL implements UserRepository {
 
     @Override
     public User findByUsername(String username) throws EntityNotFoundException{
-        Long id = null;
+        Long idOut = null;
         try{
             Statement statement = connection.createStatement();
-            String fetchUserSql = "SELECT * FROM user WHERE username = " + username;
+            String fetchUserSql = "Select * from " + USER + " where username =\'" + username + "\'";
             ResultSet userResultSet = statement.executeQuery(fetchUserSql);
-            id = userResultSet.getLong(1);
             if(userResultSet.next()){
                 return new UserBuilder()
                         .setId(userResultSet.getLong("id"))
                         .setUsername(userResultSet.getString("username"))
                         .setPassword(userResultSet.getString("password"))
+                        .setRoles(rightsRolesRepository.findRolesForUser(userResultSet.getLong("id")))
                         .build();
             }else {
                 throw new EntityNotFoundException(userResultSet.getLong(1),User.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
-            throw new EntityNotFoundException(id, User.class.getSimpleName());
+            throw new EntityNotFoundException(idOut, User.class.getSimpleName());
         }
     }
 

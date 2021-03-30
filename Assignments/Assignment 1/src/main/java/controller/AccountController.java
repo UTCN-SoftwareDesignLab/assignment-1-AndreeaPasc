@@ -206,7 +206,7 @@ public class AccountController {
             } catch (ParseException parseException) {
                 parseException.printStackTrace();
             }
-            
+
             Double billAmount = accountView.getBillAMount();
             Notification<Boolean> accountNotification = accountService.payBill(billAmount, account);
             if(accountNotification.hasErrors()){

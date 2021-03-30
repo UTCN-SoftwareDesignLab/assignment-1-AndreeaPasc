@@ -1,23 +1,31 @@
 package database;
 
+import model.Role;
+import model.User;
+import model.builder.UserBuilder;
 import repository.security.RightsRolesRepository;
 import repository.security.RightsRolesRepositoryMySQL;
+import repository.user.UserRepository;
+import repository.user.UserRepositoryMySQL;
+import service.user.AuthenticationService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static database.Constants.Rights.RIGHTS;
-import static database.Constants.Roles.ROLES;
+import static database.Constants.Roles.*;
 import static database.Constants.Schemas.SCHEMAS;
 import static database.Constants.getRolesRights;
 
 public class Boostraper {
 
     private RightsRolesRepository rightsRolesRepository;
+    private UserRepository userRepository;
 
     public void execute() throws SQLException {
         dropAll();
@@ -25,6 +33,7 @@ public class Boostraper {
         bootstrapTables();
 
         bootstrapUserData();
+
     }
 
     private void dropAll() throws SQLException {
@@ -86,11 +95,13 @@ public class Boostraper {
 
             JDBConnectionWrapper connectionWrapper = new JDBConnectionWrapper(schema);
             rightsRolesRepository = new RightsRolesRepositoryMySQL(connectionWrapper.getConnection());
+            //userRepository = new UserRepositoryMySQL(connectionWrapper.getConnection(), rightsRolesRepository);
 
             bootstrapRoles();
             bootstrapRights();
             bootstrapRoleRight();
             bootstrapUserRoles();
+            //bootstrapOneAdmin();
         }
     }
 
@@ -120,7 +131,17 @@ public class Boostraper {
         }
     }
 
+    private void bootstrapOneAdmin(){
+        Role role = new Role(1L, ADMINISTRATOR, null);
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(role);
+        User admin = new UserBuilder()
+                .setUsername("admin1@test.com")
+                .setPassword("pass1_Test")
+                .setRoles(roles)
+                .build();
+        userRepository.save(admin);
+    }
     private void bootstrapUserRoles() {
-
     }
 }

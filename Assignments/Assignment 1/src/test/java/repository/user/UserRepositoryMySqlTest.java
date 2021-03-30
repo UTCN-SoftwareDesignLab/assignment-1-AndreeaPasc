@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import repository.EntityNotFoundException;
 import repository.security.RightsRolesRepository;
 import repository.user.UserRepository;
 
@@ -154,4 +155,20 @@ public class UserRepositoryMySqlTest {
         assertEquals(userRepository.findAll().get(0).getUsername(), user2.getUsername());
     }
 
+    @Test
+    public void findByUsername() throws EntityNotFoundException {
+        Role role = new Role(1L, EMPLOYEE, null);
+        ArrayList<Role> roles = new ArrayList<Role>();
+        roles.add(role);
+        User user = new UserBuilder()
+                .setUsername("user1@test.com")
+                .setPassword("pass1_User1")
+                .setRoles(roles)
+                .build();
+        userRepository.save(user);
+
+        List<User> users = userRepository.findAll();
+        User user0 = users.get(0);
+        Assert.assertNotNull(userRepository.findByUsername(user0.getUsername()));
+    }
 }
