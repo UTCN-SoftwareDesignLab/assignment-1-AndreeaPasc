@@ -27,15 +27,8 @@ public class ActivityLogServiceImpl implements ActivityLogService{
     }
 
     @Override
-    public Notification<Boolean> findAll() throws EntityNotFoundException {
-        List<ActivityLog> activityLogs = activityLogRepository.findAll();
-        Notification<Boolean> activityNotification = new Notification<>();
-        if(!activityLogs.isEmpty()){
-            activityNotification.setResult(Boolean.TRUE);
-        }else{
-            activityNotification.setResult(Boolean.FALSE);
-        }
-        return activityNotification;
+    public List<ActivityLog> findAll() throws EntityNotFoundException {
+        return activityLogRepository.findAll();
     }
 
     @Override

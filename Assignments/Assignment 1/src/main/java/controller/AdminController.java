@@ -44,21 +44,30 @@ public class AdminController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Notification<Boolean> activityLogNotification = null;
             List<ActivityLog> activities = null;
             try {
-                activityLogNotification = activityLogService.findAll();
+                activities = activityLogService.findAll();
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
+            }
+            List<ActivityLog> activitiesOnDate = null;
+
+            Date startDate = null;
+            Date endDate = null;
+            try {
+                startDate = adminView.getStartDate();
+                endDate = adminView.getEndDate();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
             }
 
-            try {
-                activityLogNotification = activityLogService.findAll();
-            } catch (EntityNotFoundException entityNotFoundException) {
-                entityNotFoundException.printStackTrace();
+            for(ActivityLog ac : activities){
+                if(activityLogService.checkDateRange(startDate, endDate, ac))
+                    activitiesOnDate.add(ac);
             }
-            if(activityLogNotification.hasErrors()){
-                JOptionPane.showMessageDialog(adminView.getContentPane(), activityLogNotification.getFormattedErrors());
+
+            if(activitiesOnDate.isEmpty()){
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Could not find activities!");
             } else {
                 JOptionPane.showMessageDialog(adminView.getContentPane(), "Found all activities successfully!");
             }
