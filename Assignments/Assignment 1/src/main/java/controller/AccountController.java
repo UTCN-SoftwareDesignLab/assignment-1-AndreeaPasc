@@ -1,27 +1,36 @@
 package controller;
 
 import model.Account;
-import model.Bill;
 import model.builder.AccountBuilder;
-import model.builder.BillBuilder;
+import model.builder.ActivityLogBuilder;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
 import service.account.AccountService;
+import service.activity.ActivityLogService;
+import service.user.UserService;
 import view.AccountView;
+import view.AdminView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.util.List;
+import java.util.Date;
 
 public class AccountController {
     private final AccountView accountView;
     private final AccountService accountService;
 
-    public AccountController(AccountView accountView, AccountService accountService) {
+    private final AdminView adminView;
+    private final UserService userService;
+    private final ActivityLogService activityLogService;
+
+    public AccountController(AccountView accountView, AccountService accountService, AdminView adminView, UserService userService, ActivityLogService activityLogService) {
         this.accountView = accountView;
         this.accountService = accountService;
+        this.adminView = adminView;
+        this.userService = userService;
+        this.activityLogService = activityLogService;
 
         accountView.setSaveAccountButtonListener(new SetSaveAccountButtonListener());
         accountView.setRemoveAccountButtonListener(new DeleteAccountButtonListener());
@@ -48,6 +57,12 @@ public class AccountController {
                 JOptionPane.showMessageDialog(accountView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
                 JOptionPane.showMessageDialog(accountView.getContentPane(), "Saved account successfully!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("new account saved by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
+
             }
         }
     }
@@ -57,18 +72,22 @@ public class AccountController {
         public void actionPerformed(ActionEvent e) {
             Account account = null;
             try {
-                account = createAccount();
-            } catch (ParseException parseException) {
-                parseException.printStackTrace();
+                account = accountService.findByIdNumber(accountView.getIdNumber());
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
             }
-            List<Account> accounts = null;
-            accounts.add(account);
-            accountService.delete(account);
 
-            if(!accounts.isEmpty()){
-                JOptionPane.showMessageDialog(accountView.getContentPane(), "Could not delete account!!");
+            if(account == null){
+                JOptionPane.showMessageDialog(accountView.getContentPane(), "Could find account to delete!");
             } else {
+                accountService.delete(account);
                 JOptionPane.showMessageDialog(accountView.getContentPane(), "Deleted account successfully!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("account deleted by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
+
             }
         }
     }
@@ -79,21 +98,27 @@ public class AccountController {
             Account newAccount = null;
             try {
                 newAccount = createAccount();
-            } catch (ParseException parseException) {
-                parseException.printStackTrace();
-            }
-            Notification<Boolean> accountNotification = null;
-            try {
-                accountNotification = accountService.findById(accountView.getId());
-            } catch (EntityNotFoundException entityNotFoundException) {
+            } catch (ParseException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
-            if(accountNotification.hasErrors()){
-                JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
+
+            if(newAccount == null){
+                JOptionPane.showMessageDialog(accountView.getContentPane(), "Could not find account to update!");
             } else {
-                Account oldAccount = new AccountBuilder().setId(accountView.getId()).build();
+                Account oldAccount = null;
+                try {
+                    oldAccount = accountService.findByIdNumber(accountView.getIdNumber());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
                 accountService.update(oldAccount, newAccount);
-                JOptionPane.showMessageDialog(accountView.getContentPane(), "Updated client successfully!");
+                JOptionPane.showMessageDialog(accountView.getContentPane(), "Updated account successfully!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("account updated by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
+
             }
         }
     }
@@ -101,15 +126,9 @@ public class AccountController {
     public class FindByIdAccountButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            Account account = null;
             Notification<Boolean> accountNotification = null;
             try {
-                account = createAccount();
-            } catch (ParseException parseException) {
-                parseException.printStackTrace();
-            }
-            try {
-                accountNotification = accountService.findById(account.getId());
+                accountNotification = accountService.findById(accountView.getId());
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
@@ -141,6 +160,11 @@ public class AccountController {
                 JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
             } else {
                 JOptionPane.showMessageDialog(accountView.getContentPane(), "Removed all accounts successfully!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("all accounts removed by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
             }
         }
     }
@@ -150,15 +174,16 @@ public class AccountController {
         public void actionPerformed(ActionEvent e) {
             Account account = null;
             try {
-                account = createAccount();
-            } catch (ParseException parseException) {
-                parseException.printStackTrace();
+                account = accountService.findByIdNumber(accountView.getIdNumber());
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
             }
+
             Account account2 = null;
             try {
-                account2 = createAccount();
-            } catch (ParseException parseException) {
-                parseException.printStackTrace();
+                account2 = accountService.findByIdNumber(accountView.getIdNumber());
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
             }
 
             Double money = accountView.getTransferMoney();
@@ -181,7 +206,7 @@ public class AccountController {
             } catch (ParseException parseException) {
                 parseException.printStackTrace();
             }
-
+            
             Double billAmount = accountView.getBillAMount();
             Notification<Boolean> accountNotification = accountService.payBill(billAmount, account);
             if(accountNotification.hasErrors()){
@@ -194,14 +219,12 @@ public class AccountController {
 
     private Account createAccount() throws ParseException {
 
-        Account account = new AccountBuilder()
-                .setId(accountView.getId())
+        return new AccountBuilder()
                 .setClientID(accountView.getClientId())
                 .setCreationDate(accountView.getCreationDate())
                 .setType(accountView.getAccountType())
+                .setIdentificationNumber(accountView.getIdNumber())
                 .setMoneyAmount(accountView.getMoneyAmount())
                 .build();
-
-        return account;
     }
 }

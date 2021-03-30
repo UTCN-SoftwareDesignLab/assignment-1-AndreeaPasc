@@ -82,18 +82,17 @@ public class ComponentFactory {
         this.clientService = new ClientServiceImpl(this.clientRepository);
         this.accountService = new AccountServiceImpl(this.accountRepository);
 
-        AccountView accountView = new AccountView();
-        this.accountController = new AccountController(accountView, this.accountService);
-        ClientView clientView = new ClientView();
-        this.clientController = new ClientController(clientView, this.clientService);
-
         AdminView adminView = new AdminView();
         this.adminController = new AdminController(adminView, this.userService, this.activityLogService);
 
+        AccountView accountView = new AccountView();
+        this.accountController = new AccountController(accountView, this.accountService, adminView, this.userService, activityLogService);
+
+        ClientView clientView = new ClientView();
+        this.clientController = new ClientController(clientView, this.userService, adminView, this.clientService, activityLogService);
+
         this.loginView = new LoginView();
         this.loginController = new LoginController(loginView, authenticationService, adminView, accountView, clientView);
-
-
     }
 
     public AuthenticationService getAuthenticationService() {
@@ -141,6 +140,8 @@ public class ComponentFactory {
     public UserService getUserService() {
         return userService;
     }
+
+    public ActivityLogService getActivityLogService(){ return activityLogService; }
 
     public static ComponentFactory getInstance() {
         return instance;

@@ -4,15 +4,17 @@ repository/account/AccountRepositoryMySqlTest.java
  repository.account.AccountRepositoryMySqlTest
 repository/security/RightsRolesRepositoryMySqlTest.java
  repository.security.RightsRolesRepositoryMySqlTest
+service/activity/ActivityLogServiceImplTest.java
+ service.activity.ActivityLogServiceImplTest
 service/user/AuthenticationServiceMySQLTest.java
  service.user.AuthenticationServiceMySQLTest
 service/user/UserServiceImplTest.java
  service.user.UserServiceImplTest
 service/client/ClientServiceImplTest.java
  service.client.ClientServiceImplTest
-service/account/AccountServiceImplTest.java
- service.account.AccountServiceImplTest
-repository/user/UserRepositoryMySqlTest.java
- repository.user.UserRepositoryMySqlTest
 repository/activity/ActivityLogRepositoryMySqlTest.java
  repository.activity.ActivityLogRepositoryMySqlTest
+repository/user/UserRepositoryMySqlTest.java
+ repository.user.UserRepositoryMySqlTest
+service/account/AccountServiceImplTest.java
+ service.account.AccountServiceImplTest

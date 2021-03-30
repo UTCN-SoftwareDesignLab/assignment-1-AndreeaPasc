@@ -133,4 +133,28 @@ public class AccountRepositoryMySQL implements AccountRepository{
             throw new EntityNotFoundException(id, Account.class.getSimpleName());
         }
     }
+
+    @Override
+    public Account findByIdNumber(Long id) throws EntityNotFoundException {
+        try {
+            Statement statement = connection.createStatement();
+            String fetchAccountSql = "Select * from account WHERE idNumber = " + id;
+            ResultSet accountResultSet = statement.executeQuery(fetchAccountSql);
+            if (accountResultSet.next()) {
+                return new AccountBuilder()
+                        .setId(accountResultSet.getLong("id"))
+                        .setClientID(accountResultSet.getLong("client_id"))
+                        .setIdentificationNumber(accountResultSet.getLong("idNumber"))
+                        .setCreationDate(accountResultSet.getDate("creationDate"))
+                        .setMoneyAmount(accountResultSet.getDouble("moneyAmount"))
+                        .setType(accountResultSet.getString("type"))
+                        .build();
+            } else {
+                throw new EntityNotFoundException(id, Account.class.getSimpleName());
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            throw new EntityNotFoundException(id, Account.class.getSimpleName());
+        }
+    }
 }

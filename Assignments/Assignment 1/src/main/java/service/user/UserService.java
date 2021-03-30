@@ -18,4 +18,6 @@ public interface UserService {
     void delete(User user);
 
     Notification<Boolean> findById(Long id) throws EntityNotFoundException;
+
+    User findByUsername(String username) throws EntityNotFoundException;
 }

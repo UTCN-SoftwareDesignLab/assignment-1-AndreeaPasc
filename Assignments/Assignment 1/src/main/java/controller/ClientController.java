@@ -1,24 +1,35 @@
 package controller;
 
+import model.ActivityLog;
 import model.Client;
+import model.builder.ActivityLogBuilder;
 import model.builder.ClientBuilder;
 import model.validation.Notification;
 import repository.EntityNotFoundException;
+import service.activity.ActivityLogService;
 import service.client.ClientService;
+import service.user.UserService;
+import view.AdminView;
 import view.ClientView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.Date;
 
 public class ClientController {
     private final ClientView clientView;
+    private final AdminView adminView;
+    private final UserService userService;
     private final ClientService clientService;
+    private final ActivityLogService activityLogService;
 
-    public ClientController(ClientView clientView, ClientService clientService) {
+    public ClientController(ClientView clientView, UserService userService, AdminView adminView, ClientService clientService, ActivityLogService activityLogService) {
         this.clientView = clientView;
         this.clientService = clientService;
+        this.activityLogService = activityLogService;
+        this.adminView = adminView;
+        this.userService = userService;
 
         clientView.setSaveClientButtonListener(new SetSaveClientButtonListener());
         clientView.setRemoveClientButtonListener(new DeleteClientButtonListener());
@@ -32,13 +43,23 @@ public class ClientController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Client client = createClient();
+            Client client = null;
+            try {
+                client = createClient();
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
+            }
 
             Notification<Boolean> clientNotification = clientService.save(client);
             if(clientNotification.hasErrors()){
                 JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
                 JOptionPane.showMessageDialog(clientView.getContentPane(), "Saved client successfully!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("new client saved by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
             }
         }
     }
@@ -47,15 +68,23 @@ public class ClientController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Client client = createClient();
-            List<Client> clients = null;
-            clients.add(client);
-            clientService.delete(client);
+            Client client = null;
+            try {
+                client = clientService.findByPNC(clientView.getPersonalNumericalCode());
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
+            }
 
-            if(!clients.isEmpty()){
-                JOptionPane.showMessageDialog(clientView.getContentPane(), "Could not delete client!");
+            if(client == null){
+                JOptionPane.showMessageDialog(clientView.getContentPane(), "Could not find client to delete!");
             } else {
-                JOptionPane.showMessageDialog(clientView.getContentPane(), "Deleted account successfully!");
+                clientService.delete(client);
+                JOptionPane.showMessageDialog(clientView.getContentPane(), "Deleted client successfully!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("client deleted by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
             }
         }
     }
@@ -64,19 +93,28 @@ public class ClientController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Client newClient = createClient();
-            Notification<Boolean> clientNotification = null;
+            Client newClient = null;
             try {
-                clientNotification = clientService.findById(clientView.getId());
+                newClient = createClient();
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
-            if(clientNotification.hasErrors()){
-                JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
-            } else {
-                Client oldClient = new ClientBuilder().setId(clientView.getId()).build();
+            Client oldClient = null;
+            try {
+                oldClient = clientService.findByPNC(clientView.getPersonalNumericalCode());
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
+            }
+            if(oldClient != null){
                 clientService.update(oldClient, newClient);
                 JOptionPane.showMessageDialog(clientView.getContentPane(), "Updated client successfully!");
+            } else {
+                JOptionPane.showMessageDialog(clientView.getContentPane(), "Could not find and update client!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("client updated by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
             }
         }
     }
@@ -85,10 +123,9 @@ public class ClientController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Client client = createClient();
             Notification<Boolean> clientNotification = null;
             try {
-                clientNotification = clientService.findById(client.getId());
+                clientNotification = clientService.findById(clientView.getId());
             } catch (EntityNotFoundException entityNotFoundException) {
                 entityNotFoundException.printStackTrace();
             }
@@ -122,19 +159,22 @@ public class ClientController {
                 JOptionPane.showMessageDialog(clientView.getContentPane(), clientNotification.getFormattedErrors());
             } else {
                 JOptionPane.showMessageDialog(clientView.getContentPane(), "Removed all clients successfully!");
+                try {
+                    activityLogService.save(new ActivityLogBuilder().setActivity("all clients removed by user").setDate(new Date()).setUser(userService.findByUsername(adminView.getUsername())).build());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
             }
         }
     }
 
-    private Client createClient(){
-        Client client = new ClientBuilder()
-                .setId(clientView.getId())
+    private Client createClient() throws EntityNotFoundException {
+        return new ClientBuilder()
                 .setAddress(clientView.getAddress())
                 .setIdentificationNumber(clientView.getIdentificationNumber())
                 .setPersonalNumericalCode(clientView.getPersonalNumericalCode())
                 .setName(clientView.getName())
                 .setPhoneNumber(clientView.getPhoneNumber())
                 .build();
-        return client;
     }
 }

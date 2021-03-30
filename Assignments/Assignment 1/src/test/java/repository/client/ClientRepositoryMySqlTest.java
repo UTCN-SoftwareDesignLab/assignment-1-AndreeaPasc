@@ -163,7 +163,7 @@ public class ClientRepositoryMySqlTest {
         List<Client> clients = clientRepository.findAll();
         Client client0 = clients.get(0);
         for (Client cl : clients) {
-            if (cl.getPersonalNumericalCode().equals(clientRepository.findByPNC(client0).getPersonalNumericalCode())) {
+            if (cl.getPersonalNumericalCode().equals(clientRepository.findByPNC(client0.getPersonalNumericalCode()).getPersonalNumericalCode())) {
                 found = cl;
             }
         }

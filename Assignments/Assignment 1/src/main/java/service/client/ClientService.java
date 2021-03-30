@@ -18,5 +18,5 @@ public interface ClientService {
 
     Notification<Boolean> findById(Long id) throws EntityNotFoundException;
 
-    Client findByPNC(Client client) throws EntityNotFoundException;
+    Client findByPNC(Long pnc) throws EntityNotFoundException;
 }

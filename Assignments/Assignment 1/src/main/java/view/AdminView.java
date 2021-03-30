@@ -27,8 +27,8 @@ public class AdminView extends JFrame {
         initializeFields();
         setLayout(new BoxLayout(getContentPane(), Y_AXIS));
 
-        add(new JLabel("User Id"));
-        add(tfUserId);
+        //add(new JLabel("User Id"));
+        //add(tfUserId);
         add(new JLabel("User username"));
         add(tfUserUsername);
         add(new JLabel("User password"));
@@ -63,9 +63,11 @@ public class AdminView extends JFrame {
         //tfUserRoles = new JTextField();
     }
 
+    /*
     public Long getId(){
         return Long.parseLong(tfUserId.getText());
     }
+     */
 
     public String getUsername(){
         return tfUserUsername.getText();

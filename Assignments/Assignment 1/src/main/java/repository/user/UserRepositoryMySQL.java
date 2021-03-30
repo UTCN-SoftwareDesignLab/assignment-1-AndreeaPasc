@@ -96,6 +96,29 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
+    public User findByUsername(String username) throws EntityNotFoundException{
+        Long id = null;
+        try{
+            Statement statement = connection.createStatement();
+            String fetchUserSql = "SELECT * FROM user WHERE username = " + username;
+            ResultSet userResultSet = statement.executeQuery(fetchUserSql);
+            id = userResultSet.getLong(1);
+            if(userResultSet.next()){
+                return new UserBuilder()
+                        .setId(userResultSet.getLong("id"))
+                        .setUsername(userResultSet.getString("username"))
+                        .setPassword(userResultSet.getString("password"))
+                        .build();
+            }else {
+                throw new EntityNotFoundException(userResultSet.getLong(1),User.class.getSimpleName());
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            throw new EntityNotFoundException(id, User.class.getSimpleName());
+        }
+    }
+
+    @Override
     public boolean save(User user) {
         try {
             PreparedStatement insertUserStatement = connection

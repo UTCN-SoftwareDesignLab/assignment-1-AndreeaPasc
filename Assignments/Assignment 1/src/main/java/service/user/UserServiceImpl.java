@@ -87,4 +87,9 @@ public class UserServiceImpl implements UserService{
 
         return userNotification;
     }
+
+    @Override
+    public User findByUsername(String username) throws EntityNotFoundException {
+        return userRepository.findByUsername(username);
+    }
 }

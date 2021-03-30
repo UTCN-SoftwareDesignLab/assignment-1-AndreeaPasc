@@ -22,6 +22,8 @@ model/Account.java
  model.Account
 repository/EntityNotFoundException.java
  repository.EntityNotFoundException
+model/dto/ClientDTO.java
+ model.dto.ClientDTO
 model/Right.java
  model.Right
 view/AccountView.java
@@ -34,12 +36,16 @@ view/ClientView.java
  view.ClientView
 database/SQLTableCreationFactory.java
  database.SQLTableCreationFactory
+model/dto/UserDTO.java
+ model.dto.UserDTO
 service/account/AccountServiceImpl.java
  service.account.AccountServiceImpl
 repository/account/AccountRepository.java
  repository.account.AccountRepository
-model/validation/ClientValidator.java
- model.validation.ClientValidator
+database/Boostraper.java
+ database.Boostraper
+model/dto/AccountDTO.java
+ model.dto.AccountDTO
 service/user/UserService.java
  service.user.UserService
 model/builder/ClientBuilder.java
@@ -49,6 +55,7 @@ model/builder/ActivityLogBuilder.java
 controller/AdminController.java
  controller.AdminController
  controller.AdminController$1
+ controller.AdminController$ActivityLogButtonListener
  controller.AdminController$FindAllUserButtonListener
  controller.AdminController$FindByUsernameAndPasswordButtonListener
  controller.AdminController$RemoveAllUserButtonListener
@@ -92,8 +99,8 @@ model/Bill.java
  model.Bill
 repository/client/ClientRepositoryMySQL.java
  repository.client.ClientRepositoryMySQL
-database/Boostraper.java
- database.Boostraper
+launcher/ComponentFactory.java
+ launcher.ComponentFactory
 repository/activity/ActivityLogRepository.java
  repository.activity.ActivityLogRepository
 service/user/UserServiceImpl.java
@@ -129,7 +136,7 @@ repository/user/UserRepository.java
  repository.user.UserRepository
 service/client/ClientServiceImpl.java
  service.client.ClientServiceImpl
+model/validation/ClientValidator.java
+ model.validation.ClientValidator
 repository/activity/ActivityLogRepositoryMySql.java
  repository.activity.ActivityLogRepositoryMySql
-launcher/ComponentFactory.java
- launcher.ComponentFactory

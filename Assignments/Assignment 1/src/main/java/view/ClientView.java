@@ -1,7 +1,5 @@
 package view;
 
-import controller.ClientController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -29,15 +27,15 @@ public class ClientView extends JFrame{
         initializeFields();
         setLayout(new BoxLayout(getContentPane(), Y_AXIS));
 
-        add(new JLabel("Client Id"));
+        add(new JLabel("Client Id to be found"));
         add(tfClientId);
         add(new JLabel("Client Name"));
         add(tfClientName);
-        add(new JLabel("Client Personal Numerical Code "));
+        add(new JLabel("Client Personal Numerical Code (10 digits)"));
         add(tfClientPNC);
-        add(new JLabel("Client Identity Card Number"));
+        add(new JLabel("Client Identity Card Number (6 digits)"));
         add(tfClientIdCardNumber);
-        add(new JLabel("Client Phone Number"));
+        add(new JLabel("Client Phone Number (10 digits)"));
         add(tfClientPhoneNumber);
         add(new JLabel("Client Address"));
         add(tfClientAddress);
@@ -68,8 +66,8 @@ public class ClientView extends JFrame{
         tfClientAddress = new JTextField();
     }
 
-    public Long getId(){
-        return Long.parseLong(tfClientId.getText());
+    public Long getId() {
+        return Long.parseLong(tfClientId.getText().trim());
     }
 
     public String getAddress(){

@@ -26,7 +26,6 @@ public class AdminController {
         this.userService = userService;
         this.activityLogService = activityLogService;
 
-
         adminView.setFindAllUserButtonListener(new FindAllUserButtonListener());
         adminView.setSaveUserButtonListener(new SaveUserButtonListener());
         adminView.setRemoveUserButtonListener(new RemoveUserButtonListener());
@@ -88,13 +87,17 @@ public class AdminController {
     public class RemoveUserButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            User user = createUser();
-            List<User> users = null;
-            users.add(user);
-            userService.delete(user);
-            if(!users.isEmpty()){
-                JOptionPane.showMessageDialog(adminView.getContentPane(), "Could not delete user!");
+            User user = null;
+            try {
+                user = userService.findByUsername(adminView.getUsername());
+            } catch (EntityNotFoundException entityNotFoundException) {
+                entityNotFoundException.printStackTrace();
+            }
+
+            if(user == null){
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Could find the user to delete");
             } else {
+                userService.delete(user);
                 JOptionPane.showMessageDialog(adminView.getContentPane(), "Removed user successfully!");
             }
         }
@@ -104,16 +107,16 @@ public class AdminController {
         @Override
         public void actionPerformed(ActionEvent e) {
             User newUser = createUser();
-            Notification<Boolean> userNotification = null;
-            try {
-                userNotification = userService.findById(adminView.getId());
-            } catch (EntityNotFoundException entityNotFoundException) {
-                entityNotFoundException.printStackTrace();
-            }
-            if(userNotification.hasErrors()){
-                JOptionPane.showMessageDialog(adminView.getContentPane(), userNotification.getFormattedErrors());
+
+            if(newUser != null){
+                JOptionPane.showMessageDialog(adminView.getContentPane(), "Could not find user to update!");
             } else {
-                User oldUser = new UserBuilder().setId(adminView.getId()).build();
+                User oldUser = null;
+                try {
+                    oldUser = userService.findByUsername(adminView.getUsername());
+                } catch (EntityNotFoundException entityNotFoundException) {
+                    entityNotFoundException.printStackTrace();
+                }
                 userService.update(oldUser, newUser);
                 JOptionPane.showMessageDialog(adminView.getContentPane(), "Updated user successfully!");
             }
@@ -148,12 +151,10 @@ public class AdminController {
     }
 
     private User createUser(){
-        User user = new UserBuilder()
-                .setId(adminView.getId())
+        return new UserBuilder()
                 .setUsername(adminView.getUsername())
                 .setPassword(adminView.getPassword())
                 //.setRoles(adminView.getRoles())
                 .build();
-        return user;
     }
 }

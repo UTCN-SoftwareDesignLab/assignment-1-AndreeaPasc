@@ -21,4 +21,6 @@ public interface UserRepository {
     boolean delete(User user);
 
     User findById(Long id) throws EntityNotFoundException;
+
+    User findByUsername(String username) throws EntityNotFoundException;
 }

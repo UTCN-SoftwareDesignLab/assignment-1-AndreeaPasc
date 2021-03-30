@@ -13,4 +13,5 @@ public interface ActivityLogService {
 
     Notification<Boolean> findAll() throws EntityNotFoundException;
 
+    boolean checkDateRange(Date startDate, Date stopDate, ActivityLog activityLog);
 }

@@ -133,10 +133,10 @@ public class ClientRepositoryMySQL implements ClientRepository{
         }
     }
 
-    public Client findByPNC(Client client) throws EntityNotFoundException{
+    public Client findByPNC(Long pnc) throws EntityNotFoundException{
         try{
             Statement statement = connection.createStatement();
-            String fetchClientSql = "Select * from client_info WHERE PNC = " + client.getPersonalNumericalCode();
+            String fetchClientSql = "Select * from client_info WHERE PNC = " + pnc;
             ResultSet clientResultSet = statement.executeQuery(fetchClientSql);
             if(clientResultSet.next()){
                 return new ClientBuilder()
@@ -148,11 +148,11 @@ public class ClientRepositoryMySQL implements ClientRepository{
                         .setPersonalNumericalCode(clientResultSet.getLong("PNC"))
                         .build();
             }else {
-            throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
+            throw new EntityNotFoundException(pnc, Client.class.getSimpleName());
             }
         }catch(SQLException e){
             e.printStackTrace();
-            throw new EntityNotFoundException(client.getId(), Client.class.getSimpleName());
+            throw new EntityNotFoundException(pnc, Client.class.getSimpleName());
         }
     }
 }

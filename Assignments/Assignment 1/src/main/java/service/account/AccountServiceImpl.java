@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Notification<Boolean> save(Account account) {
         AccountValidator accountValidator = new AccountValidator(account);
-        boolean valid = accountValidator.validate(account.getMoneyAmount());
+        boolean valid = accountValidator.validate(0.0);
         Notification<Boolean> accountNotification = new Notification<>();
         if(valid){
             accountNotification.setResult(accountRepository.save(account));
@@ -135,5 +135,10 @@ public class AccountServiceImpl implements AccountService{
             accountNotification.setResult(Boolean.TRUE);
         else accountNotification.setResult(Boolean.FALSE);
         return accountNotification;
+    }
+
+    @Override
+    public Account findByIdNumber(Long idNumber) throws EntityNotFoundException {
+        return accountRepository.findByIdNumber(idNumber);
     }
 }

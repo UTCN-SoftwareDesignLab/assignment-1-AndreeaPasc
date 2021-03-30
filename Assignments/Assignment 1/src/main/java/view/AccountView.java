@@ -11,6 +11,8 @@ import static javax.swing.BoxLayout.Y_AXIS;
 
 public class AccountView extends JFrame {
     private JTextField tfAccountId;
+    private JTextField tfFromAccountId;
+    private JTextField tfToAccountId;
     private JTextField tfAccountClientId;
     private JTextField tfAccountIdCardNumber;
     private JTextField tfAccountType;
@@ -35,19 +37,23 @@ public class AccountView extends JFrame {
         initializeFields();
         setLayout(new BoxLayout(getContentPane(), Y_AXIS));
 
-        add(new JLabel("Account Id"));
+        add(new JLabel("Account Id to be found"));
         add(tfAccountId);
         add(new JLabel("Account Client Id"));
         add(tfAccountClientId);
-        add(new JLabel("Account Identification Number"));
+        add(new JLabel("Account Identification Number (6 digits)"));
         add(tfAccountIdCardNumber);
         add(new JLabel("Account Type"));
         add(tfAccountType);
         add(new JLabel("Account Money Amount"));
         add(tfAccountMoneyAmount);
-        add(new JLabel("Account Creation Date"));
+        add(new JLabel("Account Creation Date (dd/mm/yyyy)"));
         add(tfAccountCreationDate);
-        add(new JLabel("Transfer money between 2 accounts"));
+        add(new JLabel("Transfer from account idNumber"));
+        add(tfFromAccountId);
+        add(new JLabel("Transfer money to account idNumber"));
+        add(tfToAccountId);
+        add(new JLabel("Transfer money"));
         add(tfAccountTransferMoney);
         add(new JLabel("Bill amount"));
         add(tfBillAmount);
@@ -82,6 +88,8 @@ public class AccountView extends JFrame {
         tfAccountType = new JTextField();
         tfAccountIdCardNumber = new JTextField();
         tfAccountMoneyAmount = new JTextField();
+        tfFromAccountId = new JTextField();
+        tfToAccountId = new JTextField();
         tfAccountTransferMoney = new JTextField();
         tfBillAmount = new JTextField();
         tfBillType = new JTextField();
@@ -89,6 +97,18 @@ public class AccountView extends JFrame {
 
     public Long getId(){
         return Long.parseLong(tfAccountId.getText());
+    }
+
+    public Long getFromAccountId(){
+        return Long.parseLong(tfFromAccountId.getText());
+    }
+
+    public Long getToAccountId(){
+        return Long.parseLong(tfToAccountId.getText());
+    }
+
+    public Long getIdNumber(){
+        return Long.parseLong(tfAccountIdCardNumber.getText());
     }
 
     public String getBillType(){
@@ -108,16 +128,15 @@ public class AccountView extends JFrame {
     }
 
     public Date getCreationDate() throws ParseException {
-        Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(tfAccountCreationDate.getText());
-        return date1;
+        return new SimpleDateFormat("dd/MM/yyyy").parse(tfAccountCreationDate.getText());
     }
 
     public String getAccountType(){
         return tfAccountType.getText();
     }
 
-    public Long getMoneyAmount(){
-        return Long.parseLong(tfAccountMoneyAmount.getText());
+    public Double getMoneyAmount(){
+        return Double.parseDouble(tfAccountMoneyAmount.getText());
     }
 
     public void setSaveAccountButtonListener(ActionListener saveAccountButtonListener){

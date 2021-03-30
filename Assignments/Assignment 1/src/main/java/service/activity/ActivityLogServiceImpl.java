@@ -5,6 +5,7 @@ import model.validation.Notification;
 import repository.EntityNotFoundException;
 import repository.activity.ActivityLogRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public class ActivityLogServiceImpl implements ActivityLogService{
@@ -35,5 +36,10 @@ public class ActivityLogServiceImpl implements ActivityLogService{
             activityNotification.setResult(Boolean.FALSE);
         }
         return activityNotification;
+    }
+
+    @Override
+    public boolean checkDateRange(Date startDate, Date stopDate, ActivityLog activityLog) {
+        return activityLog.getDate().after(startDate) && activityLog.getDate().before(stopDate);
     }
 }

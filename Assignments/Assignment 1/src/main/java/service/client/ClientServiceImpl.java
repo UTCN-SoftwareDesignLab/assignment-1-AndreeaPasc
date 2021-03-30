@@ -80,7 +80,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findByPNC(Client client) throws EntityNotFoundException {
-        return clientRepository.findByPNC(client);
+    public Client findByPNC(Long pnc) throws EntityNotFoundException {
+        return clientRepository.findByPNC(pnc);
     }
 }

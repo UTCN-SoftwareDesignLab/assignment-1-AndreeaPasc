@@ -12,7 +12,6 @@ import org.junit.Test;
 import repository.EntityNotFoundException;
 import repository.account.AccountRepository;
 import repository.client.ClientRepository;
-import service.client.ClientService;
 
 import java.util.Date;
 import java.util.List;
