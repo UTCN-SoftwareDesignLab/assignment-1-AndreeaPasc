@@ -187,11 +187,15 @@ public class AccountController {
             }
 
             Double money = accountView.getTransferMoney();
-            Notification<Boolean> accountNotification = accountService.transferMoney(money, account, account2);
-            if(accountNotification.hasErrors()){
-                JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
-            } else {
-                JOptionPane.showMessageDialog(accountView.getContentPane(), "Transferred money successfully!");
+            if(accountService.checkEnoughMoneyAmount(money, account)) {
+                Notification<Boolean> accountNotification = accountService.transferMoney(money, account, account2);
+                if (accountNotification.hasErrors()) {
+                    JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
+                } else {
+                    JOptionPane.showMessageDialog(accountView.getContentPane(), "Transferred money successfully!");
+                }
+            }else{
+                JOptionPane.showMessageDialog(accountView.getContentPane(), "Not enough money in the first account");
             }
         }
     }
@@ -206,13 +210,16 @@ public class AccountController {
             } catch (ParseException parseException) {
                 parseException.printStackTrace();
             }
-
             Double billAmount = accountView.getBillAMount();
-            Notification<Boolean> accountNotification = accountService.payBill(billAmount, account);
-            if(accountNotification.hasErrors()){
-                JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
-            } else {
-                JOptionPane.showMessageDialog(accountView.getContentPane(), "Paid bill successfully!");
+            if(accountService.checkEnoughMoneyAmount(billAmount, account)) {
+                Notification<Boolean> accountNotification = accountService.payBill(billAmount, account);
+                if (accountNotification.hasErrors()) {
+                    JOptionPane.showMessageDialog(accountView.getContentPane(), accountNotification.getFormattedErrors());
+                } else {
+                    JOptionPane.showMessageDialog(accountView.getContentPane(), "Paid bill successfully!");
+                }
+            }else{
+                JOptionPane.showMessageDialog(accountView.getContentPane(), "Not enough money in the account to pay the bill");
             }
         }
     }

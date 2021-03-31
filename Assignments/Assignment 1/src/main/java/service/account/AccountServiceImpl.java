@@ -1,7 +1,6 @@
 package service.account;
 
 import model.Account;
-import model.Bill;
 import model.builder.AccountBuilder;
 import model.validation.AccountValidator;
 import model.validation.Notification;
@@ -32,7 +31,7 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Notification<Boolean> save(Account account) {
         AccountValidator accountValidator = new AccountValidator(account);
-        boolean valid = accountValidator.validate(0.0);
+        boolean valid = accountValidator.validate();
         Notification<Boolean> accountNotification = new Notification<>();
         if(valid){
             accountNotification.setResult(accountRepository.save(account));
@@ -140,5 +139,10 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Account findByIdNumber(Long idNumber) throws EntityNotFoundException {
         return accountRepository.findByIdNumber(idNumber);
+    }
+
+    @Override
+    public boolean checkEnoughMoneyAmount(Double money, Account account) {
+        return !(account.getMoneyAmount() - money < 0);
     }
 }

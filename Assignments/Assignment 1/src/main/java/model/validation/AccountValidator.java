@@ -10,7 +10,7 @@ public class AccountValidator {
     private final Account account;
     private final List<String> errors;
 
-    final static String DATE_FORMAT = "dd/mm/yyyy hh:mm:ss";
+    //final static String DATE_FORMAT = "dd/mm/yyyy hh:mm:ss";
 
     public AccountValidator(Account account) {
         this.account = account;
@@ -27,20 +27,17 @@ public class AccountValidator {
             errors.add("Id number should have length 6");
     }
 
-    private void validateMoneyAmount(Double money){
-        if(this.account.getMoneyAmount() - money < 0)
-            errors.add("Not enough money amount in account for transaction");
-    }
-
+    /*
     private void validateDate(){
         if(!this.account.getCreationDate().toString().equals(DATE_FORMAT))
             errors.add("Not the right date format");
     }
+     */
 
-    public boolean validate(Double money){
+    public boolean validate(){
         validateIdNumber();
         //validateDate();
-        validateMoneyAmount(money);
+        //validateMoneyAmount(money);
         return errors.isEmpty();
     }
 }

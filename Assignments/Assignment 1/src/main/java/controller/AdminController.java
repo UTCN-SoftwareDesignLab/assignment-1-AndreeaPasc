@@ -53,7 +53,6 @@ public class AdminController {
                 entityNotFoundException.printStackTrace();
             }
 
-
             Date startDate = null;
             Date endDate = null;
             try {
@@ -68,7 +67,6 @@ public class AdminController {
             for(ActivityLog ac : activities){
                 if(activityLogService.checkDateRange(startDate, endDate, ac)) {
                     activitiesOnDate.add(ac);
-
                 }
             }
 

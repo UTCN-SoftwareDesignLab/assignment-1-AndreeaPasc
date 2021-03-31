@@ -24,4 +24,6 @@ public interface AccountService {
     Notification<Boolean> payBill(Double billAmount, Account account);
 
     Account findByIdNumber(Long idNumber) throws EntityNotFoundException;
+
+    boolean checkEnoughMoneyAmount(Double money, Account account);
 }

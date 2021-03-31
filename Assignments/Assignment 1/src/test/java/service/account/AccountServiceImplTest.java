@@ -233,4 +233,27 @@ public class AccountServiceImplTest {
         Account account3 = accountRepository.findAll().get(0);
         Assert.assertEquals(account3.getMoneyAmount(), (account.getMoneyAmount() - 10.0), 0.0);
     }
+
+    @Test
+    public void checkEnoughMoneyAMount(){
+        Client client = new ClientBuilder()
+                .setAddress("Str. M. Eminescu, 20")
+                .setPersonalNumericalCode(133654L)
+                .setIdentificationNumber(1275L)
+                .setPhoneNumber(4579789L)
+                .setName("Mariana")
+                .build();
+        clientRepository.save(client);
+        List<Client> clients = clientRepository.findAll();
+
+        Account account = new AccountBuilder()
+                .setClientID(clients.get(0).getId())
+                .setCreationDate(new Date())
+                .setIdentificationNumber(173456L)
+                .setMoneyAmount(45.0)
+                .setType("Savings")
+                .build();
+        accountService.save(account);
+        Assert.assertTrue(accountService.checkEnoughMoneyAmount(10.0, account));
+    }
 }
